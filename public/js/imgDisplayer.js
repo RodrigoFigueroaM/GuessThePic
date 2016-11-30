@@ -1,20 +1,4 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @oatItsaraphong
- Watch 2
-  Star 0
-  Fork 3 RodrigoFigueroaM/GuessThePic
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathGuessThePic/js/imgDisplayer.js
-e7c521e  14 minutes ago
-@RodrigoFigueroaM RodrigoFigueroaM tiles do not repeat anymore
-1 contributor
-RawBlameHistory
-85 lines (65 sloc)  2.06 KB
+
 var main = function ()
 {
     var counter=10; /*seconds*/
@@ -99,5 +83,3 @@ var Setup = function()
 {
 
 };
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
