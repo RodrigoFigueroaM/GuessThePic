@@ -6,7 +6,7 @@ var AnswerQuestionOne;
 var GetScore;
 var GetQuestionNew;
 var SubmitItem;
-//function that always listening
+//function that always listening test
 $(function(){
   'use strict';
 
