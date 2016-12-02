@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <title>Guess The Picture</title>
+  <link rel='stylesheet' type='text/css' href='semantic/dist/semantic.min.css'>
+  <script src='semantic/dist/semantic.min.js'></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="ui inverted menu">
+    <div class="ui container">
+      <a href="/" class="header item">
+        <i class="grid layout icon"></i> Guess The Pic
+      </a>
+      <a href="#" class="item">Help</a>
+    </div>
+  </div>
+  <div class="ui container">
+    <div class="ui grid">
+      <div class="three wide column">
+        <div class="ui medium header">Players Online</div>
+        <div class="ui list">
+          <div class="item">
+            <div class="header"><span id="username">User1</span></div>
+            Score: <span id="score">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="nine wide column">
+        <div class="ui container">
+          <h1 class="ui header">Can you guess what this is?</h1>
+          <canvas id="canvas">
+          </canvas>
+          <button id="next"> next</button>
+          <p>Input</p>
+          <p>Letter choice</p>
+        </div>
+      </div>
+      <div class="four wide column">
+        <div class="ui container">
+          <p>Lives go here</p>
+          <p>Score</p>
+          <p>Time</p>
+          <p>Check</p>
+          <p>Skip</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+  <!--<script src='js/app.js'></script>-->
+  <script src="js/imgDisplayer.js"></script>
+</body>
+
+</html>
