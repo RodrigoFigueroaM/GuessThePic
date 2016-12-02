@@ -61,11 +61,12 @@ function SubmitScore(){
 function SubmitItem(){
   'use strict';
   console.log('submiting Item');
-  var newCat = document.getElementsByName('addCat-holder')[0].value;
+  // var newCat = document.getElementsByName('addCat-holder')[0].value;
+  //'catagory': newCat.toUpperCase(),
   var newName = document.getElementsByName('addName-holder')[0].value;
   var newURL = document.getElementsByName('addUrl-holder')[0].value;
-  console.log(newCat + newName + newURL);
-  var jsonPass = JSON.stringify({'catagory': newCat.toUpperCase(),
+  console.log(newName + newURL);
+  var jsonPass = JSON.stringify({
                   'nameItem': newName.toUpperCase(),
                   'picUrl' : newURL});
   $.ajax({
@@ -82,7 +83,7 @@ function SubmitItem(){
           }
   });
   console.log('Clear--');
-  document.getElementsByName('addCat-holder').value ='';
+  //document.getElementsByName('addCat-holder').value ='';
   document.getElementsByName('addName-holder').value ='';
   document.getElementsByName('addUrl-holder').value ='';
 }
@@ -90,13 +91,13 @@ function SubmitItem(){
 //ajax when answer the question
 function AnswerQuestionOne(){
   'use strict';
-  var jsonStr = JSON.stringify({
-                  'catagory': 'CITY'});
-  console.log(jsonStr);
+//  var jsonStr = JSON.stringify({
+//                  'catagory': 'CITY'});
+  console.log("retrive question");
   $.ajax({
-          type: 'POST',
-          data: jsonStr,
-          dataType: 'json',
+          type: 'GET',
+          //data: jsonStr,
+          //dataType: 'json',
           contentType: 'application/json',
           url: 'http://localhost:3000/question',
           success: function(data){

@@ -24,6 +24,7 @@ client.on('connect', function() {
 //---Modification note-----//
 // add new catagory here with both var and db
 //  **do not forget to add 'case' in setCatagory()
+/*
 var citySchema = new mongoose.Schema({
 	Name: String,
 	Picture: String,
@@ -34,16 +35,22 @@ var foodSchema = new mongoose.Schema({
 	Picture: String,
   IdUse: Number
 });
-
 var cityDb = mongoose.model('cityDB', citySchema);
 var foodDb = mongoose.model('foodDB', foodSchema);
+
+*/
+var allSchema = new mongoose.Schema({
+	Name: String,
+	Picture: String,
+	IdUse: Number
+});
+var allDb = mongoose.model('allDB', allSchema);
 
 
 var topScoreSchema = new mongoose.Schema({
     UserName: String,
     UserScore: Number
 });
-
 var scoreDb = mongoose.model('TopScore', topScoreSchema);
 
 var app = express();
@@ -54,6 +61,7 @@ app.use('/', express.static('public'));
 console.log('!---- Game server side, listening at port 3000 ----!');
 
 //use to set the catagory for every and specify the type
+/*
 var setCatagory = function(catIn){
   'use strict';
   console.log(catIn);
@@ -70,15 +78,15 @@ var setCatagory = function(catIn){
       return false;
   }
 }
-
+*/
 //added in the picture and answer to the database
 //IN: {catagory: '', nameItem: '', picUrl: ''}
 app.post('/addInfo', function(req,res){
   'use strict';
   console.log('-------------addItem-----------');
-  console.log(req.body.catagory + " --- " + req.body.nameItem + " --- " + req.body.picUrl);
+  //console.log(req.body.catagory + " --- " + req.body.nameItem + " --- " + req.body.picUrl);
   //classify the catagory
-  var activeDB = setCatagory(req.body.catagory);
+  var activeDB = allDb;
 
   var newId;
   //check for duplicate
@@ -170,13 +178,13 @@ app.post('/scoreUpdate', function(req, res){
 
 //IN {catagory: ''}
 //OUT {answer:'', pic:''}
-app.post('/question', function(req,res){
+app.get('/question', function(req,res){
   'use strict';
   console.log('question');
-  var catValue = req.body.catagory;
-  console.log('CCCCCCCAAAAAAAAAAAAAAAAT ');
-  console.log(catValue);
-  var active = setCatagory(catValue);
+  //var catValue = allDb;
+  //console.log('CCCCCCCAAAAAAAAAAAAAAAAT ');
+  //console.log(catValue);
+  var active = allDb;
 
   //RNG
   var test;
@@ -206,7 +214,7 @@ app.post('/question', function(req,res){
 			else
 			{
 				console.log("CRASH");
-				res.json({'pic': 'https://lonelyplanetimages.imgix.net/mastheads/93931301.jpg?sharp=10&vib=20&w=1200',
+				res.json({'pic': 'http://supperstudio.com/wp-content/uploads/empty-spaces-logo.jpg',
 						  'answer':'yes'});
 			}
   });//end RNG
