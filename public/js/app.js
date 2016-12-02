@@ -53,6 +53,8 @@ function SubmitScore(){
           contentType: 'application/json',
           url: 'http://localhost:3000/scoreUpdate',
           success: function(data){
+              $('.newUserName').val('');
+               $('.newScore').val('');
               console.log(data);
           }
   });
@@ -78,15 +80,16 @@ function SubmitItem(){
           url: 'http://localhost:3000/addInfo',
           success: function(data){
               console.log(data);
-              //$('#newCat').val('');
-              //$('#newName').val('');
-              //$('#newUrl').val('');
+              $('.newQuestion').val('');
+              $('.addName-holder').val('');
+              $('.addUrl-holder').val('');
+             // document.getElementsByName('addQuestion-holder').value ='';
+             // document.getElementsByName('addName-holder').value ='';
+              //document.getElementsByName('addUrl-holder').value ='';
           }
   });
   console.log('Clear--');
-  document.getElementsByName('addQuestion-holder').value ='';
-  document.getElementsByName('addName-holder').value ='';
-  document.getElementsByName('addUrl-holder').value ='';
+
 }
 
 //ajax when answer the question
