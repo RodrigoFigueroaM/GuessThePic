@@ -40,6 +40,7 @@ var foodDb = mongoose.model('foodDB', foodSchema);
 
 */
 var allSchema = new mongoose.Schema({
+	Question: String,
 	Name: String,
 	Picture: String,
 	IdUse: Number
@@ -80,11 +81,11 @@ var setCatagory = function(catIn){
 }
 */
 //added in the picture and answer to the database
-//IN: {catagory: '', nameItem: '', picUrl: ''}
+//IN: {questionIn: '', nameItem: '', picUrl: ''}
 app.post('/addInfo', function(req,res){
   'use strict';
   console.log('-------------addItem-----------');
-  //console.log(req.body.catagory + " --- " + req.body.nameItem + " --- " + req.body.picUrl);
+  console.log(req.body.questionIn + " --- " + req.body.nameItem + " --- " + req.body.picUrl);
   //classify the catagory
   var activeDB = allDb;
 
@@ -104,6 +105,7 @@ app.post('/addInfo', function(req,res){
                 newId = 1;
               }
             var newItem = new activeDB({
+										Question: req.body.questionIn,
                     Name: req.body.nameItem,
                     Picture: req.body.picUrl,
                     IdUse: newId
@@ -177,7 +179,7 @@ app.post('/scoreUpdate', function(req, res){
 });//end score update
 
 //IN {catagory: ''}
-//OUT {answer:'', pic:''}
+//OUT {question: '', answer:'', pic:''}
 app.get('/question', function(req,res){
   'use strict';
   console.log('question');
@@ -185,7 +187,6 @@ app.get('/question', function(req,res){
   //console.log('CCCCCCCAAAAAAAAAAAAAAAAT ');
   //console.log(catValue);
   var active = allDb;
-
   //RNG
   var test;
   active.find({IdUse:{$exists:true}},
@@ -206,7 +207,8 @@ app.get('/question', function(req,res){
 			          console.log('return');
 					  console.log('ASDIUAHDUASHUDHA');
 					  console.log(dataIn);
-			          res.json({'pic': dataIn[0].Picture,
+			          res.json({'questionOut' : dataIn[0].Question,
+													'pic': dataIn[0].Picture,
 			                    'answer':dataIn[0].Name});
 				   }
 			    });//end retrive question

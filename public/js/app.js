@@ -43,7 +43,8 @@ function SubmitScore(){
   var newUser = document.getElementsByName('addUserName-holder')[0].value;
   var newScore = document.getElementsByName('addScore-holder')[0].value;
   console.log(newUser + newScore);
-  var jsonPass = JSON.stringify({'userName': newUser,
+  var jsonPass = JSON.stringify({
+                  'userName': newUser,
                   'score': newScore});
   $.ajax({
           type: 'POST',
@@ -61,12 +62,12 @@ function SubmitScore(){
 function SubmitItem(){
   'use strict';
   console.log('submiting Item');
-  // var newCat = document.getElementsByName('addCat-holder')[0].value;
-  //'catagory': newCat.toUpperCase(),
+   var newCat = document.getElementsByName('addQuestion-holder')[0].value;
   var newName = document.getElementsByName('addName-holder')[0].value;
   var newURL = document.getElementsByName('addUrl-holder')[0].value;
   console.log(newName + newURL);
   var jsonPass = JSON.stringify({
+                  'questionIn': newCat.toUpperCase(),
                   'nameItem': newName.toUpperCase(),
                   'picUrl' : newURL});
   $.ajax({
@@ -83,7 +84,7 @@ function SubmitItem(){
           }
   });
   console.log('Clear--');
-  //document.getElementsByName('addCat-holder').value ='';
+  document.getElementsByName('addQuestion-holder').value ='';
   document.getElementsByName('addName-holder').value ='';
   document.getElementsByName('addUrl-holder').value ='';
 }
@@ -106,6 +107,8 @@ function AnswerQuestionOne(){
             $("#picIn").attr("src", data.pic);
             $("#namePlace").empty();
             $("#namePlace").append(data.answer);
+            $("#questionPlace").empty();
+            $("#questionPlace").append(data.questionOut);
           }
   });
 }//end AnswerQuestion
