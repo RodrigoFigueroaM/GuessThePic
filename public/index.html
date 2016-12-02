@@ -35,20 +35,20 @@
   </div>
   <div class="ui raised very padded text container segment">
     <h2 class="ui header center aligned">High Scores</h2>
-    <table class="ui very basic celled fixed table" data-bind="foreach: players">
+    <table class="ui very basic celled fixed table" >
       <thead>
         <tr>
           <th>Player</th>
           <th class="right aligned">Rounds Survived</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody data-bind="foreach: players">
         <tr>
-          <td data-bind="text:name">
+          <td data-bind="text:UserName">
               User1
 
           </td>
-          <td class="right aligned" data-bind="text:score">
+          <td class="right aligned" data-bind="text:UserScore">
             22
           </td>
         </tr>
