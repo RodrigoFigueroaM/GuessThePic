@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <title>Guess The Picture</title>
+  <link rel='stylesheet' type='text/css' href='semantic/dist/semantic.min.css'>
+  <script src='semantic/dist/semantic.min.js'></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="ui inverted menu">
+    <div class="ui container">
+      <a href="/" class="header item">
+        <i class="grid layout icon"></i> Guess The Pic
+      </a>
+      <a href="#" class="item">Help</a>
+    </div>
+  </div>
+  <div class="ui text container">
+    <h1 class="ui header">Play the game!</h1>
+    <form class="ui form error">
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="user icon"></i>
+          <input type="text" name="email" placeholder="Username">
+        </div>
+      </div>
+      <div class="ui error message"></div>
+      <div class="ui fluid large submit button">Play</div>
+  </div>
+  <div class="ui raised very padded text container segment">
+    <h2 class="ui header center aligned">High Scores</h2>
+    <table class="ui very basic celled fixed table">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th class="right aligned">Rounds Survived</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <h4 class="ui header">
+              User1
+            </h4>
+          </td>
+          <td class="right aligned">
+            22
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h4 class="ui header">
+              User2
+            </h4>
+          </td>
+          <td class="right aligned">
+            15
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="js/imgDisplayer.js"></script>
+</body>
+
+</html>
