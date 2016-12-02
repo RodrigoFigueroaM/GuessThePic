@@ -86,19 +86,18 @@
         <div class="four wide column">
           <div class="ui container">
             <div class="ui medium header">Lives left:</div>
-            <span data-bind="text:lives" id="lives"><i class="heart icon"></i><i class="heart icon"></i><i class="heart icon"></i></span>
+            <span id="lives"><i class="heart icon"></i><i class="heart icon"></i><i class="heart icon"></i></span>
             <div class="ui medium header">Time Left:</div>
-            <p><span data-bind="text:time" id="time">30</span> sec</p>
+            <p><span id="time">30</span> sec</p>
             <div class="ui medium header">Rounds Survived:</div>
-            <p><span data-bind="text:score" id="score">0</span></p>
+            <p><span id="score">0</span></p>
             <button class="ui button">Check</button>
             <button class="ui button" id="next">Skip</button>
           </div>
         </div>
       </div>
-      <div class="ui error message"></div>
-      <div class="ui fluid large button" id="playButton">Play</div>
     </div>
+  </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="js/clientSocket.js"></script>
