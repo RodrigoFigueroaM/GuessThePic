@@ -1,5 +1,5 @@
 var main = function () {
-    //$('.game').hide();
+    $('.game').hide();
     $('#playBtn').click(function () {
         var userInput = $('#usernameInput').val();
         var data = {
@@ -7,7 +7,7 @@ var main = function () {
         };
         socketSend('new user', data);
         $('.homepage').hide();
-        //$('.game').show();
+        $('.game').show();
     });
 
     //Show number of hearts that represents lives
