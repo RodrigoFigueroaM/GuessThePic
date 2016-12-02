@@ -5,11 +5,11 @@
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
   <title>Guess The Picture</title>
   <link rel='stylesheet' type='text/css' href='semantic/dist/semantic.min.css'>
-  <script src='semantic/dist/semantic.min.js'></script>
   <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
+  <!--Navigation Menu-->
   <div class="ui inverted menu">
     <div class="ui container">
       <a href="/" class="header item">
@@ -18,52 +18,102 @@
       <a href="#" class="item">Help</a>
     </div>
   </div>
-  <div class="ui text container">
-    <h1 class="ui header">Play the game!</h1>
-    <form class="ui form error">
-      <div class="field">
-        <div class="ui left icon input">
-          <i class="user icon"></i>
-          <input type="text" name="email" placeholder="Username">
+  <!--Homepage - login & high scores-->
+  <div class="homepage">
+    <!--Login-->
+    <div class="ui text container">
+      <h1 class="ui header">Play the game!</h1>
+      <form class="ui form error">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" id="usernameInput" placeholder="Username">
+          </div>
+        </div>
+        <div class="ui error message"></div>
+        <div class="ui fluid large submit button" id="playBtn">Play</div>
+    </div>
+    <!--High Scores-->
+    <div class="ui raised very padded text container segment">
+      <h2 class="ui header center aligned">High Scores</h2>
+      <table class="ui very basic celled fixed table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th class="right aligned">Rounds Survived</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <h4 class="ui header">
+                User1
+              </h4>
+            </td>
+            <td class="right aligned">
+              22
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4 class="ui header">
+                User2
+              </h4>
+            </td>
+            <td class="right aligned">
+              15
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Game-->
+  <div class="game">
+    <div class="ui container">
+      <div class="ui grid">
+        <!--List of users online-->
+        <div class="three wide column">
+          <div class="ui medium header">Players Online</div>
+          <div class="ui list">
+            <div class="item">
+              <div class="header"><span id="username">User1</span></div>
+              Score: <span id="score">0</span>
+            </div>
+          </div>
+        </div>
+        <!--Main Game: Picture and input-->
+        <div class="nine wide column">
+          <div class="ui container">
+            <h1 class="ui header">Can you guess what this is?</h1>
+            <canvas id="canvas">
+            </canvas>
+            <p>Input</p>
+            <p>Letter choice</p>
+          </div>
+        </div>
+        <!--Game info: lives, time left, score, check, skip-->
+        <div class="four wide column">
+          <div class="ui container">
+            <div class="ui medium header">Lives left:</div>
+            <span data-bind="text:lives" id="lives"><i class="heart icon"></i><i class="heart icon"></i><i class="heart icon"></i></span>
+            <div class="ui medium header">Time Left:</div>
+            <p><span data-bind="text:time" id="time">30</span> sec</p>
+            <div class="ui medium header">Rounds Survived:</div>
+            <p><span data-bind="text:score" id="score">0</span></p>
+            <button class="ui button">Check</button>
+            <button class="ui button" id="next">Skip</button>
+          </div>
         </div>
       </div>
-      <div class="ui error message"></div>
-      <div class="ui fluid large submit button">Play</div>
+    </div>
   </div>
-  <div class="ui raised very padded text container segment">
-    <h2 class="ui header center aligned">High Scores</h2>
-    <table class="ui very basic celled fixed table">
-      <thead>
-        <tr>
-          <th>Player</th>
-          <th class="right aligned">Rounds Survived</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <h4 class="ui header">
-              User1
-            </h4>
-          </td>
-          <td class="right aligned">
-            22
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h4 class="ui header">
-              User2
-            </h4>
-          </td>
-          <td class="right aligned">
-            15
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src='semantic/dist/semantic.min.js'></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="js/clientSocket.js"></script>
+  <script src="js/login.js"></script>
   <script src="js/imgDisplayer.js"></script>
 </body>
 
