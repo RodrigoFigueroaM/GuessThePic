@@ -4,6 +4,9 @@
 <head>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
   <title>Guess The Picture</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
   <link rel='stylesheet' type='text/css' href='semantic/dist/semantic.min.css'>
   <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
@@ -106,15 +109,32 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="ui error message"></div>
+      <div class="ui fluid large button" id= "playButton">Play</div>
   </div>
+  <div class="ui raised very padded text container segment">
+    <h2 class="ui header center aligned">High Scores</h2>
+    <table class="ui very basic celled fixed table" >
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th class="right aligned">Rounds Survived</th>
+        </tr>
+      </thead>
+      <tbody data-bind="foreach: players">
+        <tr>
+          <td data-bind="text:UserName">
+              User1
 
-  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script src='semantic/dist/semantic.min.js'></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="js/clientSocket.js"></script>
-  <script src="js/login.js"></script>
-  <script src="js/imgDisplayer.js"></script>
+          </td>
+          <td class="right aligned" data-bind="text:UserScore">
+            22
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   <script src="js/indexUpdate.js"></script>
 </body>
 
 </html>
