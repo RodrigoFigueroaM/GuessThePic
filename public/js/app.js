@@ -81,8 +81,8 @@ function SubmitItem(){
           success: function(data){
               console.log(data);
               $('.newQuestion').val('');
-              $('.addName-holder').val('');
-              $('.addUrl-holder').val('');
+              $('.addName').val('');
+              $('.addUrl').val('');
              // document.getElementsByName('addQuestion-holder').value ='';
              // document.getElementsByName('addName-holder').value ='';
               //document.getElementsByName('addUrl-holder').value ='';
