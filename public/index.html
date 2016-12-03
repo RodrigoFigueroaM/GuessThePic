@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <title>Guess The Picture</title>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <link rel='stylesheet' type='text/css' href='semantic/dist/semantic.min.css'>
+  <script src="semantic/dist/semantic.min.js"></script>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <!--Navigation Menu-->
+  <div class="ui inverted menu">
+    <div class="ui container">
+      <a href="/" class="header item">
+        <i class="grid layout icon"></i> Guess The Pic
+      </a>
+      <a href="help.html" class="item">Help</a>
+    </div>
+  </div>
+  <!--Homepage - login & high scores-->
+  <div class="homepage">
+    <!--Login-->
+    <div class="ui text container">
+      <h1 class="ui header center aligned">Play the game!</h1>
+      <form class="ui form">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" id="usernameInput" placeholder="Username">
+          </div>
+        </div>
+        <div class="ui fluid large submit button" id="playBtn">Play</div>
+      </form>
+    </div>
+    <!--High Scores-->
+    <div class="ui raised very padded text container segment">
+      <h2 class="ui header center aligned">High Scores</h2>
+      <table class="ui very basic celled fixed table">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th class="right aligned">Rounds Survived</th>
+          </tr>
+        </thead>
+        <tbody data-bind="foreach: players">
+          <tr>
+            <td data-bind="text:UserName">
+              User1
+            </td>
+            <td class="right aligned" data-bind="text:UserScore">
+              22
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Game-->
+  <div class="game">
+    <div class="ui container">
+      <div class="ui grid">
+        <!--List of users online-->
+        <div class="three wide column">
+          <div class="ui medium header">Players Online</div>
+          <div class="ui list">
+            <div class="item">
+              <div class="header"><span id="username">User1</span></div>
+              Score: <span id="score">0</span>
+            </div>
+          </div>
+        </div>
+        <!--Main Game: Picture and input-->
+        <div class="nine wide column">
+          <div class="ui container">
+            <div class="ui medium header">Can you guess what this is?</div>
+            <canvas id="canvas">
+            </canvas>
+            <p>Input</p>
+            <p>Letter choice</p>
+          </div>
+        </div>
+        <!--Game info: lives, time left, score, check, skip-->
+        <div class="four wide column">
+          <div class="ui container">
+            <div class="ui medium header">Lives left</div>
+            <span id="lives"><i class="red heart icon" ></i><i class="red heart icon"></i><i class="red heart icon"></i></span>
+            <div class="ui medium header">Time Left</div>
+            <p><span id="time">30</span> sec</p>
+            <div class="ui medium header">Rounds Survived</div>
+            <p><span id="score">0</span></p>
+            <button class="ui button" id="check">Check</button>
+            <button class="ui button" id="next">Skip</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Game Over-->
+    <div class="ui dimmer">
+      <div class="content">
+        <div class="center">
+          <h2 class="ui inverted icon header">
+            <i class="frown icon"></i> Game Over!
+          </h2>
+          <p>Final score: <span id="score">42</span></p>
+          <button class="ui button" id="playAgainBtn">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="js/clientSocket.js"></script>
+  <script src="js/indexUpdate.js"></script>
+  <script src="js/imgDisplayer.js"></script>
+  <script src="js/game.js"></script>
+</body>
+
+</html>

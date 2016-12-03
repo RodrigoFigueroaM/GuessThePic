@@ -96,7 +96,6 @@ io.sockets.on('connection', function(socket){
 
         //update new user has connected
         io.sockets.emit('get users', users);
-
     });
 
     /********************************************************

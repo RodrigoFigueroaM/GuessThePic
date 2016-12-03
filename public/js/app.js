@@ -43,7 +43,8 @@ function SubmitScore(){
   var newUser = document.getElementsByName('addUserName-holder')[0].value;
   var newScore = document.getElementsByName('addScore-holder')[0].value;
   console.log(newUser + newScore);
-  var jsonPass = JSON.stringify({'userName': newUser,
+  var jsonPass = JSON.stringify({
+                  'userName': newUser,
                   'score': newScore});
   $.ajax({
           type: 'POST',
@@ -52,6 +53,8 @@ function SubmitScore(){
           contentType: 'application/json',
           url: 'http://localhost:3000/scoreUpdate',
           success: function(data){
+              $('.newUserName').val('');
+               $('.newScore').val('');
               console.log(data);
           }
   });
@@ -61,11 +64,12 @@ function SubmitScore(){
 function SubmitItem(){
   'use strict';
   console.log('submiting Item');
-  var newCat = document.getElementsByName('addCat-holder')[0].value;
+   var newCat = document.getElementsByName('addQuestion-holder')[0].value;
   var newName = document.getElementsByName('addName-holder')[0].value;
   var newURL = document.getElementsByName('addUrl-holder')[0].value;
-  console.log(newCat + newName + newURL);
-  var jsonPass = JSON.stringify({'catagory': newCat.toUpperCase(),
+  console.log(newName + newURL);
+  var jsonPass = JSON.stringify({
+                  'questionIn': newCat.toUpperCase(),
                   'nameItem': newName.toUpperCase(),
                   'picUrl' : newURL});
   $.ajax({
@@ -76,27 +80,28 @@ function SubmitItem(){
           url: 'http://localhost:3000/addInfo',
           success: function(data){
               console.log(data);
-              //$('#newCat').val('');
-              //$('#newName').val('');
-              //$('#newUrl').val('');
+              $('.newQuestion').val('');
+              $('.addName').val('');
+              $('.addUrl').val('');
+             // document.getElementsByName('addQuestion-holder').value ='';
+             // document.getElementsByName('addName-holder').value ='';
+              //document.getElementsByName('addUrl-holder').value ='';
           }
   });
   console.log('Clear--');
-  document.getElementsByName('addCat-holder').value ='';
-  document.getElementsByName('addName-holder').value ='';
-  document.getElementsByName('addUrl-holder').value ='';
+
 }
 
 //ajax when answer the question
 function AnswerQuestionOne(){
   'use strict';
-  var jsonStr = JSON.stringify({
-                  'catagory': 'CITY'});
-  console.log(jsonStr);
+//  var jsonStr = JSON.stringify({
+//                  'catagory': 'CITY'});
+  console.log("retrive question");
   $.ajax({
-          type: 'POST',
-          data: jsonStr,
-          dataType: 'json',
+          type: 'GET',
+          //data: jsonStr,
+          //dataType: 'json',
           contentType: 'application/json',
           url: 'http://localhost:3000/question',
           success: function(data){
@@ -105,6 +110,8 @@ function AnswerQuestionOne(){
             $("#picIn").attr("src", data.pic);
             $("#namePlace").empty();
             $("#namePlace").append(data.answer);
+            $("#questionPlace").empty();
+            $("#questionPlace").append(data.questionOut);
           }
   });
 }//end AnswerQuestion
