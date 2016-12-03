@@ -5,3 +5,25 @@
     background-color: black;
     color: black;
 }
+.answerChar
+{
+    background-color: #9DA5B3;
+    margin: 5%;
+    width: 50%;
+    height: 20%;
+}
+
+.inChar
+{
+    background-color: #282C33;
+    margin: 5%;
+    width: 50%;
+    height: 20%;
+
+}
+.answerChar .EachChar, .inChar .EachChar
+{
+    margin-top: 5%;
+    margin-right: 1%;
+    margin-left: 1%;
+}
