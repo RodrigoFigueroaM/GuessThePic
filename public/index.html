@@ -24,16 +24,16 @@
   <div class="homepage">
     <!--Login-->
     <div class="ui text container">
-      <h1 class="ui header">Play the game!</h1>
-      <form class="ui form error">
+      <h1 class="ui header center aligned">Play the game!</h1>
+      <form class="ui form">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
             <input type="text" id="usernameInput" placeholder="Username">
           </div>
         </div>
-        <div class="ui error message"></div>
         <div class="ui fluid large submit button" id="playBtn">Play</div>
+      </form>
     </div>
     <!--High Scores-->
     <div class="ui raised very padded text container segment">
@@ -75,7 +75,7 @@
         <!--Main Game: Picture and input-->
         <div class="nine wide column">
           <div class="ui container">
-            <h1 class="ui header">Can you guess what this is?</h1>
+            <div class="ui medium header">Can you guess what this is?</div>
             <canvas id="canvas">
             </canvas>
             <p>Input</p>
@@ -85,24 +85,37 @@
         <!--Game info: lives, time left, score, check, skip-->
         <div class="four wide column">
           <div class="ui container">
-            <div class="ui medium header">Lives left:</div>
+            <div class="ui medium header">Lives left</div>
             <span id="lives"><i class="heart icon"></i><i class="heart icon"></i><i class="heart icon"></i></span>
-            <div class="ui medium header">Time Left:</div>
+            <div class="ui medium header">Time Left</div>
             <p><span id="time">30</span> sec</p>
-            <div class="ui medium header">Rounds Survived:</div>
+            <div class="ui medium header">Rounds Survived</div>
             <p><span id="score">0</span></p>
-            <button class="ui button">Check</button>
+            <button class="ui button" id="check">Check</button>
             <button class="ui button" id="next">Skip</button>
           </div>
         </div>
       </div>
     </div>
+    <!--Game Over-->
+    <div class="ui dimmer">
+      <div class="content">
+        <div class="center">
+          <h2 class="ui inverted icon header">
+            <i class="frown icon"></i> Game Over!
+          </h2>
+          <p>Final score: <span id="score">42</span></p>
+          <button class="ui button" id="playAgainBtn">Play Again</button>
+        </div>
+      </div>
+    </div>
   </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script src="js/clientSocket.js"></script>
-    <script src="js/indexUpdate.js"></script>
-    <script src="js/game.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="js/clientSocket.js"></script>
+  <script src="js/indexUpdate.js"></script>
+  <script src="js/imgDisplayer.js"></script>
+  <script src="js/game.js"></script>
 </body>
 
 </html>
