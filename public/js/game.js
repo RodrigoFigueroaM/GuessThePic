@@ -15,7 +15,7 @@ var main = function () {
   //Show number of hearts that represents lives
   var changeLives = function (LivesLeft) {
     if (LivesLeft === 3) {
-      $('#lives').text = '<i class="heart icon"></i>' +
+      $('#lives').text = '<i class="red heart icon"></i>' +
         '<i class="heart icon"></i><i class="heart icon"></i>';
     } else if (LivesLeft === 2) {
       $('#lives').text = '<i class="heart icon"></i>' +
