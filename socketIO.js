@@ -14,6 +14,22 @@ var users =[],
     connections = [],
     userId = 0;
 
+//question variable
+var questionAnswer = '';
+
+//set timer to 30 sec to send a question
+var timerDelay = 35000,
+    timerId,
+    startTimeMS = 0;
+
+
+/********************************************************
+* get the time remain of 30 sec timer
+********************************************************/
+var getRemainingTime = function() {
+    return  30000 - ( (new Date()).getTime() - startTimeMS );
+};
+
 /********************************************************
 * request opton to send to server
 * para data - {path: <path>, method: <GET or POST>, <data: <data>>}
@@ -49,7 +65,7 @@ var requestOption = function(para) {
 //socket io connection
 io.sockets.on('connection', function(socket){
 
-	'use strict';
+    'use strict';
 
     //push client soocket in to connections list
     connections.push(socket);
@@ -79,61 +95,92 @@ io.sockets.on('connection', function(socket){
         users.push(user);
 
         //update new user has connected
-        io.sockets.emit('get users', user);
+        io.sockets.emit('get users', users);
     });
 
     /********************************************************
-    * listen for client to send request for picture question
-    * para data             - {category: <title>}
-    * return to all users   - {picture: <url>, answerId: <id>}
+    * send question every 35 sec
+    * return to all users   - {picture: <url>, question: <question>, timer: <30>}
     ********************************************************/
-    socket.on('question', function(data) {
+    // function to send request for question 
+    var getQuestion = function() {
 
-        //send POST request to server to retreive question picture and answer id
-        //  change to GET instead of POST
+        //send GET request to server to retreive question picture and answer
         requestOption({
             path: '/question',
             method: 'GET'
-            //data: data
         }),
         //call back of the POST request
         function(err, res, body) {
             if(err) {
                 console.log(err);
             } else {
+                //json obj to send back to clients
+                var question = {'picture': body.pic, 'question': body.question, timer: 30};
+
+                //save the answer
+                questionAnswer = body.answer;
+
+                //get the start time of sending question
+                startTimeMS = (new Date()).getTime();
+
                 //send the answer to user have send to server
-                io.sockets.emit('get question', body);
+                io.sockets.emit('get question', question);
             }
+        }
+    };
+
+    //send question every timerDelay interval
+    timerId = setInterval(getQuestion(), timerDelay);
+    
+    /********************************************************
+    * check user life if they answer question correctly
+    * para data             - {answer: <answer>}
+    * return                - [{userId: <id>, username: <name>, life: 3}, <more users name>]
+    ********************************************************/
+    socket.on('end game', function(data) {
+        //reduce 1 life 
+        if(socket.answerCorrect === false) {
+            //loop each users
+            users.some(function(value, index) {
+
+                //check if userId match socket userId
+                if(value.userId === socket.userId) {
+                    var userLife = value.life;
+
+                    //check if user have no life left
+                    if (userLife > 0) {
+                        users[index].life -= 1;
+
+                        //send update users to get amount of life left
+                        io.sockets.emit('get users', users);
+                    }
+
+                    //break out of some loop (for loop)
+                    return true;
+                }
+            });
         }
     });
 
     /********************************************************
     * listen for client answer
-    * para data             - {answerId: <id>, answer: <answer>}
+    * para data             - {answer: <answer>}
     * return to all users   - {result: <true or false>}
     ********************************************************/
     socket.on('answer', function(data) {
+        var timeRemain,
+            result = 'false';
 
-        //add username to data
-        data.username = socket.username;
+        socket.answerCorrect = false;
 
-        console.log(JSON.stringify(data));
+        if(data.answer === questionAnswer) {
+            timeRemain = parseInt(getRemainingTime());
+            socket.answerCorrect = true;
+            result = 'true';
+        }
 
-        //send post request to server for check answer
-        request(
-            requestOption({
-                path: '/answer',
-                method: 'POST',
-                data: data
-            }),
-            function(err, res, body) {
-            if(err) {
-                console.log(err);
-            } else {
-                //send the answer to user have send to server
-                io.sockets.emit('check answer', body);
-            }
-        });
+        io.sockets.emit('check answer', JSON.stringify({'result': result}));
     });
 
     /********************************************************
