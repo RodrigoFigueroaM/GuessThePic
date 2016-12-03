@@ -21,7 +21,7 @@ var main = function()
             else
             {
                 $('.inChar').append(this);
-                answerString-=arrayButtons[element].letterIn;
+                //answerString-=arrayButtons[element].letterIn;
             }
 
          });
@@ -86,7 +86,7 @@ var BuildBut = function (letterIn, numOfClicks,id)
     self.id= id;
     self.build = function()
     {
-        var bttn ='<button class="EachChar ui violet button" id="button'+id+'">'+self.letterIn+' '+self.numOfClicks+'</button>';
+        var bttn ='<button class="EachChar ui violet button" id="button'+id+'">'+self.letterIn+'</button>';
         return bttn;
     };
     self.clicked = function()
