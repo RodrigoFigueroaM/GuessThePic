@@ -143,10 +143,10 @@ io.sockets.on('connection', function(socket){
     
     /********************************************************
     * check user life if they answer question correctly
-    * para data             - {answer: <answer>}
-    * return                - {userLife: <num>}
+    * para             - NONE
+    * return           - {userLife: <num>}
     ********************************************************/
-    socket.on('end round', function(data) {
+    socket.on('end round', function() {
         //check if client answer right question before end round
         if(socket.answerCorrect === false) {
             //loop each users
@@ -163,7 +163,7 @@ io.sockets.on('connection', function(socket){
                         var jsonRes = {userLife: users[index].life};
 
                         //send back client with how many life left
-                        socket.emit('get users', JSON.stringify(jsonRes));
+                        socket.emit('check userLife', JSON.stringify(jsonRes));
                     } 
                     //send the total score of client after loss 3 lives
                     else {
@@ -197,10 +197,10 @@ io.sockets.on('connection', function(socket){
 
     /********************************************************
     * client want to play again
-    * para data                 - {answer: <answer>}
+    * para                      - NONE
     * return to that client     - {waitTime: <millisecond>}
     ********************************************************/
-    socket.on('play again', function(data){
+    socket.on('play again', function(){
         //loop each users
         users.some(function(value, index) {
 
@@ -232,8 +232,23 @@ io.sockets.on('connection', function(socket){
 
         socket.answerCorrect = false;
 
+        //client answer correctly
         if(data.answer === questionAnswer) {
             timeRemain = parseInt(getRemainingTime());
+
+            //loop each users
+            users.some(function(value, index) {
+
+                //get index of user in users list
+                if(value.userId === socket.userId) {
+                    //add set the score base on answer time
+                    users[index].score += timeRemain;
+
+                    //break out of some loop (for loop)
+                    return true;
+                }
+            });
+
             socket.answerCorrect = true;
             result = 'true';
         }
@@ -266,7 +281,9 @@ io.sockets.on('connection', function(socket){
                 jsonData = JSON.parse(body);
                 console.log(jsonData);
                 console.log(jsonData.right);
-                io.sockets.emit('update score', JSON.parse(body));
+
+                //send top 10 score to all users
+                io.sockets.emit('top score', JSON.parse(body));
             }
         });
     });
