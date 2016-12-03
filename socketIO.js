@@ -20,7 +20,8 @@ var questionAnswer = '';
 //set timer to 30 sec to send a question
 var timerDelay = 35000,
     timerId,
-    startTimeMS = 0;
+    startTimeMS = 0,
+    gameTimer = 30000;
 
 
 /********************************************************
@@ -74,7 +75,12 @@ io.sockets.on('connection', function(socket){
     /********************************************************
     * listen for a new user to connect
     * para data             - {username: <name>}
-    * return all username   - [{userId: <id>, username: <name>, life: 3}, <more users name>]
+    * return to all client  - [{
+                                userId: <id>, 
+                                username: <name>, 
+                                life: 3, 
+                                score: 0
+                            }, <more users name>]
     ********************************************************/
     socket.on('new user', function(data) {
 
@@ -88,46 +94,48 @@ io.sockets.on('connection', function(socket){
         var user = {
             userId: userId,
             username: socket.username,
+            score: 0,
             life: 3
         }
 
-        //push new username in to users array
+        //push new username in to users list
         users.push(user);
 
-        //update new user has connected
-        io.sockets.emit('get users', users);
+        //send the new list of users to all clients
+        io.sockets.emit('get users', JSON.stringify(users));
     });
 
     /********************************************************
     * send question every 35 sec
-    * return to all users   - {picture: <url>, question: <question>, timer: <30>}
+    * return to all users   - {picture: <url>, question: <question>, timer: <30 sec>}
     ********************************************************/
     // function to send request for question 
     var getQuestion = function() {
+        request(
+            //send GET request to server to retreive question picture and answer
+            requestOption({
+                path: '/question',
+                method: 'GET'
+            }),
+            //call back of the POST request
+            function(err, res, body) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    //json obj to send back to clients
+                    var jsonRes = {'picture': body.pic, 'question': body.question, timer: gameTimer};
 
-        //send GET request to server to retreive question picture and answer
-        requestOption({
-            path: '/question',
-            method: 'GET'
-        }),
-        //call back of the POST request
-        function(err, res, body) {
-            if(err) {
-                console.log(err);
-            } else {
-                //json obj to send back to clients
-                var question = {'picture': body.pic, 'question': body.question, timer: 30};
+                    //save the answer
+                    questionAnswer = body.answer;
 
-                //save the answer
-                questionAnswer = body.answer;
+                    //get the start time of sending question
+                    startTimeMS = (new Date()).getTime();
 
-                //get the start time of sending question
-                startTimeMS = (new Date()).getTime();
-
-                //send the answer to user have send to server
-                io.sockets.emit('get question', question);
+                    //send the question to all clients
+                    io.sockets.emit('get question', JSON.stringify(jsonRes));
+                }
             }
-        }
+        );
     };
 
     //send question every timerDelay interval
@@ -135,25 +143,49 @@ io.sockets.on('connection', function(socket){
     
     /********************************************************
     * check user life if they answer question correctly
-    * para data             - {answer: <answer>}
-    * return                - [{userId: <id>, username: <name>, life: 3}, <more users name>]
+    * para             - NONE
+    * return           - {userLife: <num>}
     ********************************************************/
-    socket.on('end game', function(data) {
-        //reduce 1 life 
+    socket.on('end round', function() {
+        //check if client answer right question before end round
         if(socket.answerCorrect === false) {
             //loop each users
             users.some(function(value, index) {
 
-                //check if userId match socket userId
+                //get index of user in users list
                 if(value.userId === socket.userId) {
                     var userLife = value.life;
 
-                    //check if user have no life left
+                    //user life > 0
                     if (userLife > 0) {
                         users[index].life -= 1;
 
-                        //send update users to get amount of life left
-                        io.sockets.emit('get users', users);
+                        var jsonRes = {userLife: users[index].life};
+
+                        //send back client with how many life left
+                        socket.emit('check userLife', JSON.stringify(jsonRes));
+                    } 
+                    //send the total score of client after loss 3 lives
+                    else {
+                        var data = {username: users[index].username, score: users[index].score};
+
+                        //send username and score to server
+                        request(
+                            //send POST request to server
+                            requestOption({
+                                path: '/question',
+                                method: 'POST',
+                                data: data
+                            }),
+                            //call back of the POST request
+                            function(err, res, body) {
+                                if(err) {
+                                    console.log(err);
+                                } else {
+                                    console.log(body);
+                                }
+                            }
+                        );
                     }
 
                     //break out of some loop (for loop)
@@ -161,6 +193,32 @@ io.sockets.on('connection', function(socket){
                 }
             });
         }
+    });
+
+    /********************************************************
+    * client want to play again
+    * para                      - NONE
+    * return to that client     - {waitTime: <millisecond>}
+    ********************************************************/
+    socket.on('play again', function(){
+        //loop each users
+        users.some(function(value, index) {
+
+            //get index of user in users list
+            if(value.userId === socket.userId) {
+                //reset default life to client
+                users[index].life = 3;
+                users[index].score = 0;
+
+                var jsonRes = {waitTime: parseInt(getRemainingTime())};
+
+                //send back to client how long to wait before next round
+                socket.emit('check delay', JSON.stringify(jsonRes));
+
+                //break out of some loop (for loop)
+                return true;
+            }
+        });
     });
 
     /********************************************************
@@ -174,8 +232,23 @@ io.sockets.on('connection', function(socket){
 
         socket.answerCorrect = false;
 
+        //client answer correctly
         if(data.answer === questionAnswer) {
             timeRemain = parseInt(getRemainingTime());
+
+            //loop each users
+            users.some(function(value, index) {
+
+                //get index of user in users list
+                if(value.userId === socket.userId) {
+                    //add set the score base on answer time
+                    users[index].score += timeRemain;
+
+                    //break out of some loop (for loop)
+                    return true;
+                }
+            });
+
             socket.answerCorrect = true;
             result = 'true';
         }
@@ -208,7 +281,9 @@ io.sockets.on('connection', function(socket){
                 jsonData = JSON.parse(body);
                 console.log(jsonData);
                 console.log(jsonData.right);
-                io.sockets.emit('update score', JSON.parse(body));
+
+                //send top 10 score to all users
+                io.sockets.emit('top score', JSON.parse(body));
             }
         });
     });

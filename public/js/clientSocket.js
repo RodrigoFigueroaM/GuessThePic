@@ -29,10 +29,26 @@ var main = function() {
     });
 
     /*********************************************************
-    * received new question image and answer id
-    * data - {picture: <url>, answerId: <id>}
+    * received new question, image, and timer
+    * data - {picture: <url>, answerId: <id>, timer: <num>}
     *********************************************************/
     socket.on('get question', function(data) {
+        console.log(data);
+    });
+
+    /*********************************************************
+    * check how many life that user still have after end round
+    * data - {userLife: <num>}
+    *********************************************************/
+    socket.on('check userLife', function(data) {
+        console.log(data);
+    });
+
+    /*********************************************************
+    * check how delay user want play again when user join in middle of game
+    * data - {waitTime: <millisecond>}
+    *********************************************************/
+    socket.on('check delay', function(data) {
         console.log(data);
     });
 
@@ -45,10 +61,13 @@ var main = function() {
     });
 
     /*********************************************************
-    * check user answer is right or wrong
-    * data - {result: <true or false>}
+    * get the top 10 score 
+    * data: {score: [
+    *               {username: <name>, userScore: <score>}
+    *               <more users score>
+    *       ]}
     *********************************************************/
-    socket.on('update score', function(data){
+    socket.on('top score', function(data){
         console.log(data);
     });
 
