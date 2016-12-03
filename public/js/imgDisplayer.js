@@ -2,6 +2,7 @@
 var main = function (data)
 {
     $('#next').on('click', function(){
+        console.log('next');
         AnswerQuestionOne();
     });
 
@@ -161,14 +162,14 @@ function AnswerQuestionOne(){
                   'catagory': 'CITY'});
   console.log(jsonStr);
   $.ajax({
-          type: 'POST',
-          data: jsonStr,
-          dataType: 'json',
+          type: 'GET',
+
           contentType: 'application/json',
           url: 'http://localhost:3000/question',
           success: function(data)
           {
               clearCanvas();
+              console.log(data);
               Setup(data.pic,clearTimer);
           }
   });
