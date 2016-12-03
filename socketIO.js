@@ -79,7 +79,7 @@ io.sockets.on('connection', function(socket){
         users.push(user);
 
         //update new user has connected
-        io.sockets.emit('get users', users);
+        io.sockets.emit('get users', user);
     });
 
     /********************************************************
@@ -90,10 +90,11 @@ io.sockets.on('connection', function(socket){
     socket.on('question', function(data) {
 
         //send POST request to server to retreive question picture and answer id
+        //  change to GET instead of POST
         requestOption({
             path: '/question',
-            method: 'POST',
-            data: data
+            method: 'GET'
+            //data: data
         }),
         //call back of the POST request
         function(err, res, body) {

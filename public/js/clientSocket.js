@@ -15,7 +15,7 @@ var socketSend = function(path, data) {
     else {
         socket.emit(path);
     }
-    
+
 };
 
 var main = function() {
@@ -51,7 +51,7 @@ var main = function() {
     socket.on('update score', function(data){
         console.log(data);
     });
-    
+
 };
 
 $(document).ready(main);
