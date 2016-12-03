@@ -2,16 +2,6 @@ var main = function () {
   'use strict'
   $('.game').hide();
 
-  $('#playBtn').click(function () {
-    var userInput = $('#usernameInput').val();
-    var data = {
-      'username': userInput
-    };
-    socketSend('new user', data);
-    $('.homepage').hide();
-    $('.game').show();
-  });
-
   //Show number of hearts that represents lives
   var changeLives = function (LivesLeft) {
     if (LivesLeft === 3) {

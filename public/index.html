@@ -29,10 +29,10 @@
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" id="usernameInput" placeholder="Username">
+                <input type="text" id="usernameInput" data-bind="textInput: newUserText">
           </div>
         </div>
-        <div class="ui fluid large submit button" id="playBtn">Play</div>
+           <div class="ui fluid large submit button" id="playBtn" data-bind="click: loginFunction">Play</div>
       </form>
     </div>
     <!--High Scores-->
