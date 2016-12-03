@@ -7,6 +7,7 @@ var main = function(){
     console.log(this.innerHTML);
     $('.answerChar').append(this.innerHTML);
     this.disabled = true;
+    this.style.backgroundColor= "#e0b3ff";
   });
 
   $('#answer').on("click", function(){
@@ -23,6 +24,6 @@ function buildBut(wordIn){
   var i;
   for(i = 0; i < answer.length; i++)
   {
-        $('.inChar').append('<button class="EachChar">'+wordIn[i]+'</button>');
+        $('.inChar').append(  '<button class="EachChar ui violet button">'+wordIn[i]+'</button>');
   }
 }
