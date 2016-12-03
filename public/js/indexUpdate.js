@@ -20,21 +20,52 @@ function GetScore()
   });
 }
 
+
+/******************************
+*        Classes
+*******************************/
+
 // Class to represent a row in the seat reservations grid
-function TopPlayer(UserName,UserScore) {
+function TopPlayer(UserName,UserScore)
+ {
     var self = this;
     self.UserName = UserName;
     self.UserScore = UserScore;
 }
 
+function user(username)
+{
+    var self = this;
+    self.username = username;
+    self.lives = 3;
+}
+
+/******************************
+*        Models
+*******************************/
 // Overall viewmodel for this screen, along with initial state
 var topScoreModel =
 {
-    players:ko.observableArray(),
-
-    addpayer: function()
+    players : ko.observableArray(),
+    newUserText :  ko.observable(),
+    addplayer: function()
         {
-            self.players.push(new TopPlayer(UserName,UserScore));
+            players.push(new TopPlayer(UserName,UserScore));
+        },
+    /*loging controller */
+    loginFunction : function()
+    {
+            var userInput = $('#usernameInput').val();
+            var user = this.createNewUser(this.newUserText());
+            socketSend('new user', user);
+            $('.homepage').hide();
+            $('.game').show();
+    },
+        /*user controller */
+        createNewUser: function()
+        {
+            var player = new user( this.newUserText());
+            return player;
         }
 };
 
