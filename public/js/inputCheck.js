@@ -1,46 +1,96 @@
-var answer = "Google"
-var numOfClicks = 0;
-var main = function(){
+var main = function()
+{
+    var answer = "Google";
+//     var factory = new ButtonFactory(answer);
+//     factory.createWordButton();
+//     factory.appendTo('.inChar');
+     var arrayButtons = createWordButton(answer, '.inChar');
+     var answerString='';
 
-  buildBut(answer);
-  $('#answer').prop("disabled", true);
+     $(arrayButtons).each(function(element)
+     {
+         $('#button'+ element).on('click', function()
+         {
+              arrayButtons[element].clicked();
+            if( arrayButtons[element].numOfClicks % 2 !==0 )
+            {
+                $('.answerChar').append(this);
+                 answerString+=arrayButtons[element].letterIn;
 
-  $('.EachChar').on("click", function(){
-    numOfClicks++;
-    console.log(this.innerHTML);
-    $('.answerChar').append(this.innerHTML);
-    this.disabled = true;
-    this.style.backgroundColor= "#e0b3ff";
-    if (numOfClicks == answer.length)
-    {
-      $('#answer').prop("disabled", false);
-    }
+            }
+            else
+            {
+                $('.inChar').append(this);
+                answerString-=arrayButtons[element].letterIn;
+            }
 
-  });
-  
-  $('#clear').on("click", function(){
-    $('.answerChar').empty();
-    $('.EachChar').prop("disabled", false);
+         });
+     });
 
-  });
-
-  $('#answer').on("click", function(){
-
-    console.log(document.getElementById("testChar").innerHTML);
-    $('#newAnswer').append(document.getElementById("testChar").innerHTML);
-  });
+     $('#answer').on("click", function()
+     {
+         console.log(answerString);
+     });
 
 
 };
 $(document).ready(main);
 
-function buildBut(wordIn){
-  console.log(answer.length);
-  var i;
-  for(i = 0; i < answer.length; i++)
-  {
-        $('.inChar').append(  '<button class="EachChar ui violet button">'+wordIn[i]+'</button>');
-  }
+function createWordButton(wordIn,element)
+{
+    var wordButton=[];
+    var i = 0;
+    for(i = 0; i < wordIn.length; i++)
+    {
+        wordButton[i]= new BuildBut(wordIn[i],0,i);
+    }
+    for(i = 0; i < wordButton.length; i++)
+    {
+        $(element).append(wordButton[i].build());
+    //    $(wordButton[i]).bind('click',function(){console.log(":");});
+    }
+    return wordButton;
 }
 
 
+
+var ButtonFactory = function (wordIn)
+{
+    var self = this;
+    self.wordIn = wordIn;
+    self.wordButton =[];
+    self.createWordButton = function()
+    {
+        var i=0;
+        for(i = 0; i < self.wordIn.length; i++)
+        {
+            console.log(self.wordIn.length);
+            self.wordButton[i] = new BuildBut(self.wordIn[i],0,i);
+            console.log(self.wordButton.length);
+        }
+    };
+    self.appendTo = function(element)
+    {
+        for(i = 0; i < self.wordButton.length; i++)
+        {
+            $(element).append(self.wordButton[i].build());
+        }
+    };
+};
+
+var BuildBut = function (letterIn, numOfClicks,id)
+{
+    var self = this;
+    self.letterIn = letterIn;
+    self. numOfClicks =numOfClicks;
+    self.id= id;
+    self.build = function()
+    {
+        var bttn ='<button class="EachChar ui violet button" id="button'+id+'">'+self.letterIn+' '+self.numOfClicks+'</button>';
+        return bttn;
+    };
+    self.clicked = function()
+    {
+            self.numOfClicks++;
+    };
+};
