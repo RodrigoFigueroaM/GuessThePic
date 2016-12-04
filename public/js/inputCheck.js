@@ -1,6 +1,6 @@
 var main = function()
 {
-    var test = "Google".addChar();
+    var test = "GOOGLE".addChar();
     var answer = test.shuffle();
 //     var factory = new ButtonFactory(answer);
 //     factory.createWordButton();
@@ -89,7 +89,7 @@ var ButtonFactory = function (wordIn)
 String.prototype.addChar = function makeid()
 {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible = "ACDEFGHILNORSTUW";
 
     for( var i=0; i < 5; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
