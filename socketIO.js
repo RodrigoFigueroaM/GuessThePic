@@ -20,15 +20,15 @@ var questionAnswer = '';
 //set timer to 30 sec to send a question
 var timerDelay = 35000,
     timerId,
-    startTimeMS = 0,
+    startTimeMS = (new Date()).getTime(),
     gameTimer = 30000;
 
 
 /********************************************************
-* get the time remain of 30 sec timer
+* get the time remain the game
 ********************************************************/
-var getRemainingTime = function() {
-    return  30000 - ( (new Date()).getTime() - startTimeMS );
+var getRemainingTime = function(time) {
+    return  time - ( (new Date()).getTime() - startTimeMS );
 };
 
 /********************************************************
@@ -62,6 +62,49 @@ var requestOption = function(para) {
 
     return option;
 };
+
+/********************************************************
+* send question every 35 sec
+* return to all users   - {picture: <url>, question: <question>, timer: <30 sec>}
+********************************************************/
+
+//send question every timerDelay interval
+timerId = setInterval(function() {
+        //this just show the time
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = (m < 10)? '0'+m : m;
+            s = (s < 10)? '0'+s : s;
+            console.log(h + ":" + m + ":" + s);
+
+        //send request to server for question
+        request(
+            //send GET request to server to retreive question picture and answer
+            requestOption({
+                path: '/question',
+                method: 'GET'
+            }),
+            //call back of the POST request
+            function(err, res, body) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    //json obj to send back to clients
+                    console.log("send all client with question:");
+                    var jsonRes = {'picture': body.pic, 'question': body.question, timer: gameTimer};
+                    console.log(jsonRes);
+                    //save the answer
+                    questionAnswer = body.answer;       
+
+                    //send the question to all clients
+                    io.sockets.emit('get question', JSON.stringify(jsonRes));
+                }
+            }
+        );
+    }, timerDelay
+);
 
 //socket io connection
 io.sockets.on('connection', function(socket){
@@ -101,49 +144,15 @@ io.sockets.on('connection', function(socket){
         //push new username in to users list
         users.push(user);
 
+        //send back to client how long to wait before next round
+        var jsonRes = {waitTime: parseInt(getRemainingTime(timerDelay))};
+        socket.emit('check delay', JSON.stringify(jsonRes));
+
         //send the new list of users to all clients
         io.sockets.emit('get users', JSON.stringify(users));
     });
 
-    /********************************************************
-    * send question every 35 sec
-    * return to all users   - {picture: <url>, question: <question>, timer: <30 sec>}
-    ********************************************************/
-    // function to send request for question 
-    var getQuestion = function() {
-        request(
-            //send GET request to server to retreive question picture and answer
-            requestOption({
-                path: '/question',
-                method: 'GET'
-            }),
-            //call back of the POST request
-            function(err, res, body) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    //json obj to send back to clients
-                    var jsonRes = {'picture': body.pic, 'question': body.question, timer: gameTimer};
-                    console.log(jsonRes);
-                    //save the answer
-                    questionAnswer = body.answer;
 
-                    //get the start time of sending question
-                    startTimeMS = (new Date()).getTime();
-
-                    //send the question to all clients
-                    io.sockets.emit('get question', JSON.stringify(jsonRes));
-                }
-            }
-        );
-    };
-
-    //send question every timerDelay interval
-    timerId = setInterval(function() {
-            getQuestion();
-        }, timerDelay
-    );
-    
     /********************************************************
     * check user life if they answer question correctly
     * para             - NONE
@@ -213,7 +222,7 @@ io.sockets.on('connection', function(socket){
                 users[index].life = 3;
                 users[index].score = 0;
 
-                var jsonRes = {waitTime: parseInt(getRemainingTime())};
+                var jsonRes = {waitTime: parseInt(getRemainingTime(timerDelay))};
 
                 //send back to client how long to wait before next round
                 socket.emit('check delay', JSON.stringify(jsonRes));
@@ -237,7 +246,7 @@ io.sockets.on('connection', function(socket){
 
         //client answer correctly
         if(data.answer === questionAnswer) {
-            timeRemain = parseInt(getRemainingTime());
+            timeRemain = parseInt(getRemainingTime(gameTimer));
 
             //loop each users
             users.some(function(value, index) {
