@@ -9,6 +9,7 @@ var main = function()
     //var answer = shuffleWord(test1);
     //console.log(answer);
      var arrayButtons = createWordButton(answer, '.inChar');
+     var answerArray=[];
      var answerString='';
 
      $(arrayButtons).each(function(element)
@@ -19,20 +20,22 @@ var main = function()
             if( arrayButtons[element].numOfClicks % 2 !==0 )
             {
                 $('.answerChar').append(this);
-                 answerString+=arrayButtons[element].letterIn;
-
             }
             else
             {
                 $('.inChar').append(this);
-                //answerString-=arrayButtons[element].letterIn;
             }
-
          });
      });
 
      $('#answer').on("click", function()
      {
+         answerString='';
+         $('.answerChar .EachChar').each(function(value,element)
+         {
+             answerString+=$(element).html();
+         });
+
          console.log(answerString);
      });
 

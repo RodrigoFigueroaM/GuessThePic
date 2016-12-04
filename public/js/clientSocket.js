@@ -15,7 +15,6 @@ var socketSend = function(path, data) {
     else {
         socket.emit(path);
     }
-
 };
 
 var main = function() {
@@ -25,7 +24,7 @@ var main = function() {
     * data - [{userId: <id>, username: <name>, life: 3}, <more users name>]
     *********************************************************/
     socket.on('get users', function(data) {
-        console.log(data);
+        topScoreModel.onlineUsers(JSON.parse(data));
     });
 
     /*********************************************************
@@ -33,6 +32,7 @@ var main = function() {
     * data - {picture: <url>, answerId: <id>, timer: <num>}
     *********************************************************/
     socket.on('get question', function(data) {
+
         console.log(data);
     });
 

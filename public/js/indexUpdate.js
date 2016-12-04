@@ -40,6 +40,7 @@ function user(username)
     self.lives = 3;
 }
 
+
 /******************************
 *        Models
 *******************************/
@@ -48,6 +49,7 @@ var topScoreModel =
 {
     players : ko.observableArray(),
     newUserText :  ko.observable(),
+    onlineUsers: ko.observableArray([]),
     addplayer: function()
         {
             players.push(new TopPlayer(UserName,UserScore));
@@ -70,6 +72,7 @@ var topScoreModel =
 };
 
 ko.applyBindings(topScoreModel) ;
+
 
 
 $(document).ready(main);
