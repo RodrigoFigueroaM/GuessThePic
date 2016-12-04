@@ -1,6 +1,6 @@
 var main = function()
 {
-    var test = "GOOGLE".addChar();
+    var test = "Google".addChar();
     var answer = test.shuffle();
 //     var factory = new ButtonFactory(answer);
 //     factory.createWordButton();
@@ -99,7 +99,7 @@ String.prototype.addChar = function makeid()
 
 //original : http://stackoverflow.com/questions/3943772/how-do-i-shuffle-the-characters-in-a-string-in-javascript
 String.prototype.shuffle = function () {
-    var a = this.split(""),
+    var a = this.toUpperCase().split(""),
         n = a.length;
 
     for(var i = n - 1; i > 0; i--) {
