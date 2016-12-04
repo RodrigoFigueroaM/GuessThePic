@@ -73,11 +73,21 @@ var main = function() {
     socket.on('check userLife', function(data) {
         console.log(data);
         var test = JSON.parse(data);
-
-        $('#lives').empty();
-        for(var i = 0 ; i < 5 ; i++)
+        if(test.userLife === 0)
         {
-          $('#lives').append('<i class="red heart icon" ></i>');
+          //execute end game
+          $('#questionSpace').empty();
+          $('#questionSpace').append(
+              '<div> GAME OVER </div>'
+          );
+        }
+        else
+        {
+          $('#lives').empty();
+          for(var i = 0 ; i < test.userLife ; i++)
+          {
+            $('#lives').append('<i class="red heart icon" ></i>');
+          }
         }
     });
 
