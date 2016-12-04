@@ -154,7 +154,7 @@ return twoDArray;
 };
 
 
-var 
+
 
 //ajax when answer the question
 function AnswerQuestionOne(){

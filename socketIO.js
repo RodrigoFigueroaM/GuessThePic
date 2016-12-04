@@ -16,6 +16,9 @@ var users =[],
 
 //question variable
 var questionAnswer = '';
+var encrypt;
+var decrypt;
+var key = "SXGWLZPDO";
 
 //set timer to 30 sec to send a question
 var timerDelay = 35000,
@@ -91,12 +94,22 @@ timerId = setInterval(function() {
                 if(err) {
                     console.log(err);
                 } else {
+                    console.log(body);
+                    var jsonData = JSON.parse(body);
+                    var test = encrypt(jsonData.answer, key);
+                    console.log("EnCode" + test);
+                    test = decrypt(jsonData.answer, key);
+                    console.log("DnCode" + test);
                     //json obj to send back to clients
                     console.log("send all client with question:");
-                    var jsonRes = {'picture': body.pic, 'question': body.question, timer: gameTimer};
+                    //console.log(jsEncode(jsonData.answer, "UND"));
+                    var jsonRes = {"picture": jsonData.pic,
+                                    "question": jsonData.questionOut,
+                                    "timer": gameTimer,
+                                    "answerEn": encrypt(jsonData.answer, key)};
                     console.log(jsonRes);
                     //save the answer
-                    questionAnswer = body.answer;       
+                    questionAnswer = body.answer;
 
                     //send the question to all clients
                     io.sockets.emit('get question', JSON.stringify(jsonRes));
@@ -119,9 +132,9 @@ io.sockets.on('connection', function(socket){
     * listen for a new user to connect
     * para data             - {username: <name>}
     * return to all client  - [{
-                                userId: <id>, 
-                                username: <name>, 
-                                life: 3, 
+                                userId: <id>,
+                                username: <name>,
+                                life: 3,
                                 score: 0
                             }, <more users name>]
     ********************************************************/
@@ -176,7 +189,7 @@ io.sockets.on('connection', function(socket){
 
                         //send back client with how many life left
                         socket.emit('check userLife', JSON.stringify(jsonRes));
-                    } 
+                    }
                     //send the total score of client after loss 3 lives
                     else {
                         var data = {username: users[index].username, score: users[index].score};
@@ -325,3 +338,11 @@ io.sockets.on('connection', function(socket){
         console.log('Connected sockets: %s', connections.length);
     });
 });
+
+
+function encrypt( plaintext, key ){
+
+
+
+    return retVal;
+}

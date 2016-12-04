@@ -76,10 +76,14 @@
         <!--Main Game: Picture and input-->
         <div class="nine wide column">
           <div class="ui container">
-            <div class="ui medium header" id="questionSpace" data-bind="text: questionSpaceBind">Can you guess what this is?</div>
+            <div class="ui medium header" id="questionSpace" >Can you guess what this is?</div>
             <canvas id="canvas">
             </canvas>
             <p>Input</p>
+            <div id='testChar' class="answerChar"></div>
+            <div class="inChar"></div>
+            <button id="answer">Answer</button>
+            <div id="newAnswer"></div>
             <p>Letter choice</p>
           </div>
         </div>
@@ -122,6 +126,7 @@
   <script src="js/indexUpdate.js"></script>
   <script src="js/imgDisplayer.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/inputCheck.js"></script>
 </body>
 
 </html>

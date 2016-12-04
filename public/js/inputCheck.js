@@ -1,11 +1,13 @@
 var main = function()
 {
+
+
     var test = "Google".addChar();
     var answer = test.shuffle();
 //     var factory = new ButtonFactory(answer);
 //     factory.createWordButton();
 //     factory.appendTo('.inChar');
-
+    var test2 = encrypt("BLUE BROTHER", "KEY");
     //var answer = shuffleWord(test1);
     //console.log(answer);
      var arrayButtons = createWordButton(answer, '.inChar');
@@ -39,9 +41,34 @@ var main = function()
          console.log(answerString);
      });
 
-
 };
 $(document).ready(main);
+
+
+
+function encrypt( stringIn, key ){
+
+    var newString ="";
+    var sizeIn = stringIn.length;
+    var sizeKey = key.length;
+    var Keycount = 0;
+    var temp;
+    for(var i = 0; i < sizeIn; i++)
+    {
+      if(Keycount > sizeKey)
+      {
+        Keycount = 0;
+      }
+      //console.log(stringIn[i].charCodeAt(0));
+      temp = stringIn[i].charCodeAt(0);
+      var temp2 = key[i].charCodeAt(0);
+      console.log(temp);
+      newString = newString + (temp ^ temp2);
+    }
+    console.log("Encode" + newString);
+    return newString;
+};
+
 
 function createWordButton(wordIn,element)
 {
@@ -58,7 +85,6 @@ function createWordButton(wordIn,element)
     }
     return wordButton;
 }
-
 
 
 var ButtonFactory = function (wordIn)
@@ -98,7 +124,8 @@ String.prototype.addChar = function makeid()
 }
 
 //original : http://stackoverflow.com/questions/3943772/how-do-i-shuffle-the-characters-in-a-string-in-javascript
-String.prototype.shuffle = function () {
+String.prototype.shuffle = function ()
+{
     var a = this.toUpperCase().split(""),
         n = a.length;
 
