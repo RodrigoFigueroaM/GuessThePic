@@ -1,10 +1,53 @@
+* 
+{
+	font-family: 'Titan One', cursive;
+}
+
+.ui.header
+{
+	font-family: 'Titan One', cursive;
+}
+
+#usernameInput
+{
+	border-radius: 22px;
+	font-size: 16px;
+	font-family: 'Titan One', cursive;
+}
+
+#playBtn
+{
+	background-color: #7ADEFF;
+	border-radius: 22px;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: 'Titan One', cursive;
+}
+
 #canvas
 {
-    width: 100%;
-    height: 100%;
     background-color: black;
+    width: 50%;
+    height: 85%;
     color: black;
 }
+
+#scoreBoard
+{
+	border-radius: 22px;
+}
+
+.heart.icon 
+{
+	color: red;
+}
+
+.ui.button
+{
+	border-radius: 22px;
+	font-family: 'Titan One', cursive;
+}
+
 .answerChar
 {
     background-color: #9DA5B3;
