@@ -65,9 +65,11 @@ var main = function() {
             }
         }, 1000);
         var pictureData= JSON.parse(data);
-        clearCanvas();
+        console.log(pictureData.question);
         $('#questionSpace').empty();
-        $('#questionSpace').append(pictureData.questionOut);
+        $('#questionSpace').append(pictureData.question);
+        clearCanvas();
+
         Setup(pictureData.picture);
         buttonMan(pictureData.answerEn);
     //    console.log(data);

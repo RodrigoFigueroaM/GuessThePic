@@ -1,3 +1,4 @@
+
 var main = function()
 {
     //ajax when the score need update
