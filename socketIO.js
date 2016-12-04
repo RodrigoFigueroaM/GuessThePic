@@ -124,7 +124,7 @@ io.sockets.on('connection', function(socket){
                 } else {
                     //json obj to send back to clients
                     var jsonRes = {'picture': body.pic, 'question': body.question, timer: gameTimer};
-
+                    console.log(jsonRes);
                     //save the answer
                     questionAnswer = body.answer;
 
@@ -139,7 +139,10 @@ io.sockets.on('connection', function(socket){
     };
 
     //send question every timerDelay interval
-    timerId = setInterval(getQuestion(), timerDelay);
+    timerId = setInterval(function() {
+            getQuestion();
+        }, timerDelay
+    );
     
     /********************************************************
     * check user life if they answer question correctly
@@ -203,7 +206,7 @@ io.sockets.on('connection', function(socket){
     socket.on('play again', function(){
         //loop each users
         users.some(function(value, index) {
-
+            console.log('this active');
             //get index of user in users list
             if(value.userId === socket.userId) {
                 //reset default life to client

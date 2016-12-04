@@ -65,10 +65,9 @@
         <!--List of users online-->
         <div class="three wide column">
           <div class="ui medium header">Players Online</div>
-          <div class="ui list">
+          <div class="ui list" data-bind="foreach: onlineUsers">
             <div class="item">
-              <div class="header"><span id="username">User1</span></div>
-              Score: <span id="score">0</span>
+              <span data-bind="text: $data.username"></span> - <span data-bind="text: $data.score"></span>
             </div>
           </div>
         </div>
