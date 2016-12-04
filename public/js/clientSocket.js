@@ -72,6 +72,13 @@ var main = function() {
     *********************************************************/
     socket.on('check userLife', function(data) {
         console.log(data);
+        var test = JSON.parse(data);
+
+        $('#lives').empty();
+        for(var i = 0 ; i < test.userLife ; i++)
+        {
+          $('#lives').append('<i class="red heart icon" ></i>');
+        }
     });
 
     /*********************************************************
@@ -91,6 +98,7 @@ var main = function() {
         console.log(data);
         var test = JSON.parse(data);
         console.log(test);
+
         if(test.result === 'true')
         {
           $('#checkAnswer').prop("disabled", true);
