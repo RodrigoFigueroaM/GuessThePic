@@ -64,10 +64,12 @@
       <div class="ui grid">
         <!--List of users online-->
         <div class="three wide column">
-          <div class="ui medium header">Players Online</div>
-          <div class="ui list" data-bind="foreach: onlineUsers">
-            <div class="item">
-              <span data-bind="text: $data.username"></span> - <span data-bind="text: $data.score"></span>
+          <div class="ui segment">
+            <div class="ui medium header">Players Online</div>
+            <div class="ui list" data-bind="foreach: onlineUsers">
+              <div class="item">
+                <span data-bind="text: $data.username"></span> - <span data-bind="text: $data.score"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -83,15 +85,20 @@
         </div>
         <!--Game info: lives, time left, score, check, skip-->
         <div class="four wide column">
-          <div class="ui container">
-            <div class="ui medium header">Lives left</div>
-            <span id="lives"><i class="red heart icon" ></i><i class="red heart icon"></i><i class="red heart icon"></i></span>
-            <div class="ui medium header">Time Left</div>
-            <p><span id="time">30</span> sec</p>
-            <div class="ui medium header">Rounds Survived</div>
-            <p><span id="score">0</span></p>
-            <button class="ui button" id="check">Check</button>
-            <button class="ui button" id="next">Skip</button>
+          <div class="ui segment">
+            <div class="ui container">
+              <div class="ui medium header">Lives left</div>
+              <span id="lives"><i class="red heart icon" ></i><i class="red heart icon"></i><i class="red heart icon"></i></span>
+              <div class="ui medium header">Time Left</div>
+                <div class="ui indicating progress">
+                  <div class="bar"></div>
+                  <div class="label">Funding</div>
+                </div>
+              <div class="ui medium header">Rounds Survived</div>
+              <p><span id="score">0</span></p>
+              <button class="ui button" id="check">Check</button>
+              <button class="ui button" id="next">Skip</button>
+            </div>
           </div>
         </div>
       </div>

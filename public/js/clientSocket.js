@@ -1,5 +1,14 @@
 var socket = io.connect('http://localhost:8080');
-
+//process
+$('.ui.progress').progress({
+    duration    : 800,
+    total       : 30,
+    percent     : 100,
+    value       : 30,
+    text        : {
+        active: '{value} sec'
+    }
+});
 /*********************************************************
 * send request to socket server
 * path - socket path
@@ -32,6 +41,21 @@ var main = function() {
     * data - {picture: <url>, answerId: <id>, timer: <num>}
     *********************************************************/
     socket.on('get question', function(data) {
+        var $progress       = $('.ui.progress');
+
+        // reset to default
+        clearInterval(window.fakeProgress)
+        $progress.progress('set value', 30);
+
+        // updates every 1 sec until 0
+        window.fakeProgress = setInterval(function() {
+            $progress.progress('decrement', 1);
+
+            // stop timer when 0
+            if($progress.progress('get value') <= 0) {
+                clearInterval(window.fakeProgress);
+            }
+        }, 1000);
 
         console.log(data);
     });
