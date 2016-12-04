@@ -40,7 +40,8 @@ var main = function() {
     * received new question, image, and timer
     * data - {picture: <url>, answerId: <id>, timer: <num>}
     *********************************************************/
-    socket.on('get question', function(data) {
+    socket.on('get question', function(data)
+     {
         var $progress       = $('.ui.progress');
 
         // reset to default
@@ -56,8 +57,13 @@ var main = function() {
                 clearInterval(window.fakeProgress);
             }
         }, 1000);
-
-        console.log(data);
+        var pictureData= JSON.parse(data);
+        clearCanvas();
+        $('#questionSpace').empty();
+        $('#questionSpace').append(pictureData.questionOut);
+        Setup(pictureData.picture,clearTimer);
+        buttonMan(pictureData.answerEn);
+    //    console.log(data);
     });
 
     /*********************************************************
@@ -85,7 +91,7 @@ var main = function() {
     });
 
     /*********************************************************
-    * get the top 10 score 
+    * get the top 10 score
     * data: {score: [
     *               {username: <name>, userScore: <score>}
     *               <more users score>
