@@ -29,14 +29,14 @@ var main = function()
          });
      });
 
-     $('#answer').on("click", function()
+     $('#checkAnswer').on("click", function()
      {
          answerString='';
          $('.answerChar .EachChar').each(function(value,element)
          {
              answerString+=$(element).html();
          });
-
+        //send to socket
          console.log(answerString);
      });
 
