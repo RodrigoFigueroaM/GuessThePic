@@ -91,6 +91,9 @@ timerId = setInterval(function() {
                 if(err) {
                     console.log(err);
                 } else {
+                    //reset start timer
+                    startTimeMS = (new Date).getTime();
+
                     console.log(body);
                     var jsonData = JSON.parse(body);
                     //json obj to send back to clients
@@ -139,12 +142,13 @@ io.sockets.on('connection', function(socket){
         //add new username and userId to socket
         socket.username = data.username;
         socket.userId = userId;
+        socket.answerCorrect = false;
 
         var user = {
             userId: userId,
             username: socket.username,
             score: 0,
-            life: 2
+            life: 3
         }
 
         //push new username in to users list
@@ -165,10 +169,12 @@ io.sockets.on('connection', function(socket){
     * return           - {userLife: <num>}
     ********************************************************/
     socket.on('end round', function() {
+        console.log("send end round");
         //check if client answer right question before end round
         if(socket.answerCorrect === false) {
             //loop each users
             users.some(function(value, index) {
+                console.log(value);
 
                 //get index of user in users list
                 if(value.userId === socket.userId) {
@@ -176,8 +182,10 @@ io.sockets.on('connection', function(socket){
 
                     //user life > 0
                     if (userLife > 0) {
+                        console.log(users[index].life);
                         users[index].life -= 1;
 
+                        console.log(users[index].life);
                         var jsonRes = {userLife: users[index].life};
 
                         //send back client with how many life left
@@ -249,6 +257,8 @@ io.sockets.on('connection', function(socket){
             result = 'false';
 
         socket.answerCorrect = false;
+        data = JSON.parse(data);
+        console.log(data);
 
         //client answer correctly
         if(data.answer === questionAnswer) {
@@ -271,7 +281,7 @@ io.sockets.on('connection', function(socket){
             result = 'true';
         }
 
-        io.sockets.emit('check answer', JSON.stringify({'result': result}));
+        socket.emit('check answer', JSON.stringify({'result': result}));
     });
 
     /********************************************************

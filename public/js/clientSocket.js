@@ -9,6 +9,9 @@ $('.ui.progress').progress({
         active: '{value} sec'
     }
 });
+//testing only
+var userLife = 3;
+
 /*********************************************************
 * send request to socket server
 * path - socket path
@@ -46,7 +49,7 @@ var main = function() {
 
         // reset to default
         clearInterval(window.fakeProgress)
-        $progress.progress('set value', 30);
+        $progress.progress('set value', 10);
 
         // updates every 1 sec until 0
         window.fakeProgress = setInterval(function() {
@@ -54,7 +57,11 @@ var main = function() {
 
             // stop timer when 0
             if($progress.progress('get value') <= 0) {
+                if(userLife >0) {
+                    socketSend('end round');
+                }
                 clearInterval(window.fakeProgress);
+
             }
         }, 1000);
         var pictureData= JSON.parse(data);
@@ -71,6 +78,8 @@ var main = function() {
     * data - {userLife: <num>}
     *********************************************************/
     socket.on('check userLife', function(data) {
+        data = JSON.parse(data);
+        userLife = data.userLife;
         console.log(data);
     });
 
