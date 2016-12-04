@@ -24,20 +24,22 @@ var buttonMan = function(answerGlobal)
          });
      });
 
-     $('#checkAnswer').on("click", function()
-     {
-         answerString='';
-         $('.answerChar .EachChar').each(function(value,element)
-         {
-             answerString+=$(element).html();
-         });
-        //send to socket
-        socketSend("answer", JSON.stringify({"answer": answerString}));
-         //$('#checkAnswer').prop("disabled", true);
-        console.log(answerString);
-     });
+
 
 };
+
+$('#checkAnswer').on("click", function()
+{
+    answerString='';
+    $('.answerChar .EachChar').each(function(value,element)
+    {
+        answerString+=$(element).html();
+    });
+   //send to socket
+   socketSend("answer", JSON.stringify({"answer": answerString}));
+    //$('#checkAnswer').prop("disabled", true);
+   console.log(answerString);
+})
 
 function createWordButton(wordIn,element)
 {
