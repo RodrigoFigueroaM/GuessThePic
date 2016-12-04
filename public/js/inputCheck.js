@@ -44,6 +44,7 @@ function createWordButton(wordIn,element)
 {
     var wordButton=[];
     var i = 0;
+    $('#warningMess').hide();
     $('#checkAnswer').prop("disabled", false);
     for(i = 0; i < wordIn.length; i++)
     {
@@ -55,7 +56,6 @@ function createWordButton(wordIn,element)
     }
     return wordButton;
 }
-
 
 var BuildBut = function (letterIn, numOfClicks,id)
 {

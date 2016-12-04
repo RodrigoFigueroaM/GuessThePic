@@ -75,7 +75,7 @@ var main = function() {
         var test = JSON.parse(data);
 
         $('#lives').empty();
-        for(var i = 0 ; i < test.userLife ; i++)
+        for(var i = 0 ; i < 5 ; i++)
         {
           $('#lives').append('<i class="red heart icon" ></i>');
         }
