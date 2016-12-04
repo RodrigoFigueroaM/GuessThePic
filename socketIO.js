@@ -144,7 +144,7 @@ io.sockets.on('connection', function(socket){
             userId: userId,
             username: socket.username,
             score: 0,
-            life: 3
+            life: 2
         }
 
         //push new username in to users list
