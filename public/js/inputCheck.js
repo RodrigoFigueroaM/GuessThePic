@@ -2,8 +2,7 @@ var main = function()
 {
 
 
-    var test = "Google".addChar();
-    var answer = test.shuffle();
+    var answer = "Google";
 //     var factory = new ButtonFactory(answer);
 //     factory.createWordButton();
 //     factory.appendTo('.inChar');
@@ -86,32 +85,6 @@ var ButtonFactory = function (wordIn)
     };
 };
 
-//Original : http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-String.prototype.addChar = function makeid()
-{
-    var text = "";
-    var possible = "ACDEFGHILNORSTUW";
-
-    for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return this + text;
-}
-
-//original : http://stackoverflow.com/questions/3943772/how-do-i-shuffle-the-characters-in-a-string-in-javascript
-String.prototype.shuffle = function ()
-{
-    var a = this.toUpperCase().split(""),
-        n = a.length;
-
-    for(var i = n - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
-    return a.join("");
-}
 
 var BuildBut = function (letterIn, numOfClicks,id)
 {
