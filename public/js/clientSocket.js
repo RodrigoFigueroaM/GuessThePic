@@ -49,7 +49,7 @@ var main = function() {
 
         // reset to default
         clearInterval(window.fakeProgress)
-        $progress.progress('set value', 10);
+        $progress.progress('set value', 30);
 
         // updates every 1 sec until 0
         window.fakeProgress = setInterval(function() {
@@ -80,9 +80,9 @@ var main = function() {
     socket.on('check userLife', function(data) {
         data = JSON.parse(data);
         userLife = data.userLife;
-        console.log(data);
-        var test = JSON.parse(data);
-        if(test.userLife === 0)
+        console.log(userLife);
+        //var test = JSON.parse(data);
+        if(userLife === 0)
         {
           //execute end game
           $('#questionSpace').empty();
@@ -93,9 +93,9 @@ var main = function() {
         else
         {
           $('#lives').empty();
-          for(var i = 0 ; i < test.userLife ; i++)
+          for(var i = 0 ; i < userLife ; i++)
           {
-            $('#lives').append('<i class="red heart icon" ></i>');
+            $('#lives').fadeIn("slow").append('<i class="red heart icon" ></i>');
           }
         }
     });
@@ -117,10 +117,12 @@ var main = function() {
         console.log(data);
         var test = JSON.parse(data);
         console.log(test);
-
         if(test.result === 'true')
         {
           $('#checkAnswer').prop("disabled", true);
+          $('.EachChar').prop("disabled", true);
+          $('#warningMess').empty();
+          $('#warningMess').append('wrong');
         }
     });
 

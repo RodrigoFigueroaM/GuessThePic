@@ -105,7 +105,7 @@ timerId = setInterval(function() {
                                     "answerEn": jsonData.answer.addChar().shuffle()};
                     console.log(jsonRes);
                     //save the answer
-                    questionAnswer = body.answer;
+                    questionAnswer = jsonData.answer;
 
                     //send the question to all clients
                     io.sockets.emit('get question', JSON.stringify(jsonRes));

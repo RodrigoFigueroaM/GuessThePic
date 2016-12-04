@@ -34,7 +34,6 @@ var buttonMan = function(answerGlobal)
         //send to socket
         socketSend("answer", JSON.stringify({"answer": answerString}));
          //$('#checkAnswer').prop("disabled", true);
-        $('.EachChar').prop("disabled", true);
         console.log(answerString);
      });
 
