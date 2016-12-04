@@ -3,7 +3,7 @@ var buttonMan = function(answerGlobal)
     //var answer = shuffleWord(test1);
      $('#testChar').empty();
      $('.inChar').empty();
-    console.log(answerGlobal);
+     console.log(answerGlobal);
      var arrayButtons = createWordButton(answerGlobal, '.inChar');
      var answerArray=[];
      var answerString='';
