@@ -89,6 +89,12 @@ var main = function() {
     *********************************************************/
     socket.on('check answer', function(data) {
         console.log(data);
+        var test = JSON.parse(data);
+        console.log(test);
+        if(test.result === 'true')
+        {
+          $('#checkAnswer').prop("disabled", true);
+        }
     });
 
     /*********************************************************

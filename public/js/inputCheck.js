@@ -32,6 +32,9 @@ var buttonMan = function(answerGlobal)
              answerString+=$(element).html();
          });
         //send to socket
+        socketSend("answer", JSON.stringify({"answer": answerString}));
+         $('#checkAnswer').prop("disabled", true);
+         $('.EachChar').prop("disabled", true);
          console.log(answerString);
      });
 
@@ -41,6 +44,7 @@ function createWordButton(wordIn,element)
 {
     var wordButton=[];
     var i = 0;
+    $('#checkAnswer').prop("disabled", false);
     for(i = 0; i < wordIn.length; i++)
     {
         wordButton[i]= new BuildBut(wordIn[i],0,i);
