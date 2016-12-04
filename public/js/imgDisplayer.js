@@ -4,6 +4,7 @@ var main = function (data)
     $('#next').on('click', function(){
         console.log('next');
         AnswerQuestionOne();
+
     });
 
 };
@@ -153,24 +154,24 @@ return twoDArray;
 };
 
 
-
+var 
 
 //ajax when answer the question
 function AnswerQuestionOne(){
   'use strict';
-  var jsonStr = JSON.stringify({
-                  'catagory': 'CITY'});
-  console.log(jsonStr);
+  //console.log(jsonStr);
   $.ajax({
           type: 'GET',
-
           contentType: 'application/json',
           url: 'http://localhost:3000/question',
           success: function(data)
           {
               clearCanvas();
               console.log(data);
+              $('#questionSpace').empty(data.questionOut);
+              $('#questionSpace').append(data.questionOut);
               Setup(data.pic,clearTimer);
+
           }
   });
 }//end AnswerQuestion
