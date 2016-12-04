@@ -2,7 +2,13 @@
 {
 	font-family: 'Titan One', cursive;
 }
-
+.homepage img:first-child
+{
+    width: 45%;
+    height: 45%;
+    display: block;
+    margin: 0 auto;
+}
 .ui.header
 {
 	font-family: 'Titan One', cursive;
