@@ -186,10 +186,13 @@ io.sockets.on('connection', function(socket){
                         users[index].life -= 1;
 
                         console.log(users[index].life);
-                        var jsonRes = {userLife: users[index].life};
+                        var jsonRes = {userLife: users[index].life, userScore: users[index].score};
 
                         //send back client with how many life left
                         socket.emit('check userLife', JSON.stringify(jsonRes));
+
+                        //send update of online users 
+                        io.sockets.emit('get users', users);
                     }
                     //send the total score of client after loss 3 lives
                     else {
