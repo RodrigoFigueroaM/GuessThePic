@@ -75,12 +75,12 @@ function clearTimer(interval)
 *********************************************************/
 var Setup = function(img)
 {
-    var counter=20; /*seconds*/
-    var refreshRate=2; /*tiles per seconds*/
+    var counter=19; /*seconds*/
+    var refreshRate=100; /*tiles per seconds*/
     var images= img;
     var imageIndex=0;
-    var numberOfRows=10;
-    var numberOfColumns=5;
+    var numberOfRows=50;
+    var numberOfColumns=50;
     var interval;
     var array=[];
     var timer=counter*refreshRate;
@@ -94,8 +94,6 @@ var Setup = function(img)
         {
                 clearInterval(interval);
         }
-        $('body p').remove();
-        $('body').prepend('<p>time left:'+ Math.floor(timer / refreshRate)+' seconds  </p>');
         timer--;
         drawImage(images,numberOfRows,numberOfColumns,array );
 

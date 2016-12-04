@@ -3,7 +3,7 @@ var buttonMan = function(answerGlobal)
     //var answer = shuffleWord(test1);
      $('#testChar').empty();
      $('.inChar').empty();
-    console.log(answerGlobal);
+     console.log(answerGlobal);
      var arrayButtons = createWordButton(answerGlobal, '.inChar');
      var answerArray=[];
      var answerString='';
@@ -33,9 +33,9 @@ var buttonMan = function(answerGlobal)
          });
         //send to socket
         socketSend("answer", JSON.stringify({"answer": answerString}));
-         $('#checkAnswer').prop("disabled", true);
-         $('.EachChar').prop("disabled", true);
-         console.log(answerString);
+         //$('#checkAnswer').prop("disabled", true);
+        $('.EachChar').prop("disabled", true);
+        console.log(answerString);
      });
 
 };
@@ -44,6 +44,7 @@ function createWordButton(wordIn,element)
 {
     var wordButton=[];
     var i = 0;
+    $('#warningMess').hide();
     $('#checkAnswer').prop("disabled", false);
     for(i = 0; i < wordIn.length; i++)
     {
@@ -55,7 +56,6 @@ function createWordButton(wordIn,element)
     }
     return wordButton;
 }
-
 
 var BuildBut = function (letterIn, numOfClicks,id)
 {

@@ -81,6 +81,23 @@ var main = function() {
         data = JSON.parse(data);
         userLife = data.userLife;
         console.log(data);
+        var test = JSON.parse(data);
+        if(test.userLife === 0)
+        {
+          //execute end game
+          $('#questionSpace').empty();
+          $('#questionSpace').append(
+              '<div> GAME OVER </div>'
+          );
+        }
+        else
+        {
+          $('#lives').empty();
+          for(var i = 0 ; i < test.userLife ; i++)
+          {
+            $('#lives').append('<i class="red heart icon" ></i>');
+          }
+        }
     });
 
     /*********************************************************
@@ -100,6 +117,7 @@ var main = function() {
         console.log(data);
         var test = JSON.parse(data);
         console.log(test);
+
         if(test.result === 'true')
         {
           $('#checkAnswer').prop("disabled", true);
