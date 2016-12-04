@@ -1,6 +1,8 @@
 var buttonMan = function(answerGlobal)
 {
     //var answer = shuffleWord(test1);
+     $('#testChar').empty();
+     $('.inChar').empty();
     console.log(answerGlobal);
      var arrayButtons = createWordButton(answerGlobal, '.inChar');
      var answerArray=[];
@@ -46,35 +48,9 @@ function createWordButton(wordIn,element)
     for(i = 0; i < wordButton.length; i++)
     {
         $(element).append(wordButton[i].build());
-    //    $(wordButton[i]).bind('click',function(){console.log(":");});
     }
     return wordButton;
 }
-
-
-var ButtonFactory = function (wordIn)
-{
-    var self = this;
-    self.wordIn = wordIn;
-    self.wordButton =[];
-    self.createWordButton = function()
-    {
-        var i=0;
-        for(i = 0; i < self.wordIn.length; i++)
-        {
-            console.log(self.wordIn.length);
-            self.wordButton[i] = new BuildBut(self.wordIn[i],0,i);
-            console.log(self.wordButton.length);
-        }
-    };
-    self.appendTo = function(element)
-    {
-        for(i = 0; i < self.wordButton.length; i++)
-        {
-            $(element).append(self.wordButton[i].build());
-        }
-    };
-};
 
 
 var BuildBut = function (letterIn, numOfClicks,id)

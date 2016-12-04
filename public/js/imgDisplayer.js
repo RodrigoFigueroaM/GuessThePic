@@ -1,11 +1,3 @@
-
-var main = function (data)
-{
-
-
-};
-$(document).ready(main);
-
 /*********************************************************
 *  Draws Image into the canvas
 * image -  current interval on the window
@@ -81,23 +73,26 @@ function clearTimer(interval)
 * img -  a url. or local image name
 * callback - function that will be called in this function
 *********************************************************/
-var Setup = function(img, callback)
+var Setup = function(img)
 {
-    var counter=30; /*seconds*/
-    var refreshRate=100; /*tiles per seconds*/
+    var counter=20; /*seconds*/
+    var refreshRate=2; /*tiles per seconds*/
     var images= img;
     var imageIndex=0;
-    var numberOfRows=100;
-    var numberOfColumns=50;
+    var numberOfRows=10;
+    var numberOfColumns=5;
     var interval;
-    var array= twoDimAraray(numberOfRows,numberOfColumns);
+    var array=[];
     var timer=counter*refreshRate;
+
+
+    array= twoDimAraray(numberOfRows,numberOfColumns);
 
     interval = setInterval(function()
     {
         if(timer===0)
         {
-            callback(interval);
+                clearInterval(interval);
         }
         $('body p').remove();
         $('body').prepend('<p>time left:'+ Math.floor(timer / refreshRate)+' seconds  </p>');

@@ -61,7 +61,7 @@ var main = function() {
         clearCanvas();
         $('#questionSpace').empty();
         $('#questionSpace').append(pictureData.questionOut);
-        Setup(pictureData.picture,clearTimer);
+        Setup(pictureData.picture);
         buttonMan(pictureData.answerEn);
     //    console.log(data);
     });
@@ -78,7 +78,8 @@ var main = function() {
     * check how delay user want play again when user join in middle of game
     * data - {waitTime: <millisecond>}
     *********************************************************/
-    socket.on('check delay', function(data) {
+    socket.on('check delay', function(data)
+    {
         console.log(data);
     });
 
