@@ -96,17 +96,13 @@ timerId = setInterval(function() {
                 } else {
                     console.log(body);
                     var jsonData = JSON.parse(body);
-                    var test = encrypt(jsonData.answer, key);
-                    console.log("EnCode" + test);
-                    test = decrypt(jsonData.answer, key);
-                    console.log("DnCode" + test);
                     //json obj to send back to clients
                     console.log("send all client with question:");
                     //console.log(jsEncode(jsonData.answer, "UND"));
                     var jsonRes = {"picture": jsonData.pic,
                                     "question": jsonData.questionOut,
                                     "timer": gameTimer,
-                                    "answerEn": encrypt(jsonData.answer, key)};
+                                    "answerEn": jsonData.answer};
                     console.log(jsonRes);
                     //save the answer
                     questionAnswer = body.answer;
@@ -338,11 +334,3 @@ io.sockets.on('connection', function(socket){
         console.log('Connected sockets: %s', connections.length);
     });
 });
-
-
-function encrypt( plaintext, key ){
-
-
-
-    return retVal;
-}

@@ -7,7 +7,7 @@ var main = function()
 //     var factory = new ButtonFactory(answer);
 //     factory.createWordButton();
 //     factory.appendTo('.inChar');
-    var test2 = encrypt("BLUE BROTHER", "KEY");
+
     //var answer = shuffleWord(test1);
     //console.log(answer);
      var arrayButtons = createWordButton(answer, '.inChar');
@@ -43,31 +43,6 @@ var main = function()
 
 };
 $(document).ready(main);
-
-
-
-function encrypt( stringIn, key ){
-
-    var newString ="";
-    var sizeIn = stringIn.length;
-    var sizeKey = key.length;
-    var Keycount = 0;
-    var temp;
-    for(var i = 0; i < sizeIn; i++)
-    {
-      if(Keycount > sizeKey)
-      {
-        Keycount = 0;
-      }
-      //console.log(stringIn[i].charCodeAt(0));
-      temp = stringIn[i].charCodeAt(0);
-      var temp2 = key[i].charCodeAt(0);
-      console.log(temp);
-      newString = newString + (temp ^ temp2);
-    }
-    console.log("Encode" + newString);
-    return newString;
-};
 
 
 function createWordButton(wordIn,element)
