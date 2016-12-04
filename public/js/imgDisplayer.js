@@ -1,11 +1,7 @@
 
 var main = function (data)
 {
-    $('#next').on('click', function(){
-        console.log('next');
-        AnswerQuestionOne();
 
-    });
 
 };
 $(document).ready(main);
@@ -87,8 +83,8 @@ function clearTimer(interval)
 *********************************************************/
 var Setup = function(img, callback)
 {
-    var counter=15; /*seconds*/
-    var refreshRate=150; /*tiles per seconds*/
+    var counter=30; /*seconds*/
+    var refreshRate=100; /*tiles per seconds*/
     var images= img;
     var imageIndex=0;
     var numberOfRows=100;
@@ -96,7 +92,6 @@ var Setup = function(img, callback)
     var interval;
     var array= twoDimAraray(numberOfRows,numberOfColumns);
     var timer=counter*refreshRate;
-
 
     interval = setInterval(function()
     {
@@ -113,10 +108,9 @@ var Setup = function(img, callback)
 
 };
 
-
 function clearCanvas()
 {
-    var ctx =getContext();
+    var ctx = getContext();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -157,21 +151,4 @@ return twoDArray;
 
 
 //ajax when answer the question
-function AnswerQuestionOne(){
-  'use strict';
-  //console.log(jsonStr);
-  $.ajax({
-          type: 'GET',
-          contentType: 'application/json',
-          url: 'http://localhost:3000/question',
-          success: function(data)
-          {
-              clearCanvas();
-              console.log(data);
-              $('#questionSpace').empty(data.questionOut);
-              $('#questionSpace').append(data.questionOut);
-              Setup(data.pic,clearTimer);
-
-          }
-  });
-}//end AnswerQuestion
+//end AnswerQuestion

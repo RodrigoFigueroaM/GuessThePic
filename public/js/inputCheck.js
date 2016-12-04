@@ -1,15 +1,8 @@
-var main = function()
+var buttonMan = function(answerGlobal)
 {
-
-
-    var answer = "Google";
-//     var factory = new ButtonFactory(answer);
-//     factory.createWordButton();
-//     factory.appendTo('.inChar');
-
     //var answer = shuffleWord(test1);
-    //console.log(answer);
-     var arrayButtons = createWordButton(answer, '.inChar');
+    console.log(answerGlobal);
+     var arrayButtons = createWordButton(answerGlobal, '.inChar');
      var answerArray=[];
      var answerString='';
 
@@ -41,8 +34,6 @@ var main = function()
      });
 
 };
-$(document).ready(main);
-
 
 function createWordButton(wordIn,element)
 {
