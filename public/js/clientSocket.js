@@ -124,11 +124,19 @@ var main = function() {
         {
           $('#checkAnswer').prop("disabled", true);
           $('.EachChar').prop("disabled", true);
+
+          $('#indicator').empty();
+          $('#indicator').append('<i class="green large check circle icon"></i>');
+
           $('#warningMess').empty();
           $('#warningMess').append('wrong');
 
           $('#scoreMain').empty();
           $('#scoreMain').append(data.score);
+        }
+        else {
+          $('#indicator').empty();
+          $('#indicator').append('<i class="red large remove circle icon"></i>');
         }
     });
 
