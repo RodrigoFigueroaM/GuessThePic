@@ -175,6 +175,16 @@ io.sockets.on('connection', function(socket){
     * return           - {userLife: <num>}
     ********************************************************/
     socket.on('end round', function() {
+        var userIndex;
+        users.some(function(value, index) {
+            //get index of user in users list
+            if(value.userId === socket.userId) {
+                userIndex = index;
+
+                //break out of some loop (for loop)
+                return true;
+            }
+        });
         console.log("send end round");
         console.log("cor:", socket.answerCorrect);
         //check if client answer right question before end round
@@ -182,56 +192,51 @@ io.sockets.on('connection', function(socket){
             //loop each users
             users.some(function(value, index) {
                 console.log(value);
+                var userLife = value.life;
 
-                //get index of user in users list
-                if(value.userId === socket.userId) {
-                    var userLife = value.life;
+                //user life > 0
+                if (users[userIndex].life > 0) {
+                    console.log(users[userIndex].life);
+                    users[userIndex].life -= 1;
 
-                    //user life > 0
-                    if (userLife > 0) {
-                        console.log(users[index].life);
-                        users[index].life -= 1;
+                    console.log(users[userIndex].life);
+                    var jsonRes = {userLife: users[userIndex].life, userScore: users[userIndex].score};
 
-                        console.log(users[index].life);
-                        var jsonRes = {userLife: users[index].life, userScore: users[index].score};
-
-                        //send back client with how many life left
-                        socket.emit('check userLife', JSON.stringify(jsonRes));
-
-                        //send update of online users
-                        io.sockets.emit('get users', users);
-                    }
-                    //send the total score of client after loss 3 lives
-                    else {
-                        var data = {username: users[index].username, score: users[index].score};
-
-                        //send username and score to server
-                        request(
-                            //send POST request to server
-                            requestOption({
-                                path: '/question',
-                                method: 'POST',
-                                data: data
-                            }),
-                            //call back of the POST request
-                            function(err, res, body) {
-                                if(err) {
-                                    console.log(err);
-                                } else {
-                                    console.log(body);
-                                }
-                            }
-                        );
-                    }
-
-                    //break out of some loop (for loop)
-                    return true;
+                    //send back client with how many life left
+                    socket.emit('check userLife', JSON.stringify(jsonRes));
                 }
+                //send the total score of client after loss 3 lives
+                else {
+                    var data = {username: users[userIndex].username, score: users[userIndex].score};
+
+                    //send username and score to server
+                    request(
+                        //send POST request to server
+                        requestOption({
+                            path: '/question',
+                            method: 'POST',
+                            data: data
+                        }),
+                        //call back of the POST request
+                        function(err, res, body) {
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                console.log(body);
+                            }
+                        }
+                    );
+                }               
             });
-            
+
         } else {
             //send update of online users 
             io.sockets.emit('get users', JSON.stringify(users));
+
+            var jsonRes = {userLife: users[userIndex].life, userScore: users[userIndex].score};
+
+            //send back client with how many life left
+            socket.emit('check userLife', JSON.stringify(jsonRes));
         }
 
         socket.answerCorrect = false;
@@ -286,7 +291,7 @@ io.sockets.on('connection', function(socket){
                 //get index of user in users list
                 if(value.userId === socket.userId) {
                     //add set the score base on answer time
-                    users[index].score += timeRemain;
+                    users[index].score += parseInt(timeRemain / 1000);
                     //break out of some loop (for loop)
                     return true;
                 }
