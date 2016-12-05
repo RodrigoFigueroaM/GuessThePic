@@ -1,7 +1,4 @@
-* 
-{
-	font-family: 'Titan One', cursive;
-}
+
 
 body
 {
@@ -23,16 +20,12 @@ body
 	height: auto;
 }
 
-.ui.header
-{
-	font-family: 'Titan One', cursive;
-}
+
 
 #usernameInput
 {
 	border-radius: 22px;
 	font-size: 16px;
-	font-family: 'Titan One', cursive;
 }
 
 #playBtn
@@ -41,7 +34,6 @@ body
 	border-radius: 22px;
 	font-size: 16px;
 	font-weight: bold;
-	font-family: 'Titan One', cursive;
 }
 
 #canvas
@@ -70,7 +62,6 @@ body
 .ui.button
 {
 	border-radius: 22px;
-	font-family: 'Titan One', cursive;
 }
 
 .answerChar
