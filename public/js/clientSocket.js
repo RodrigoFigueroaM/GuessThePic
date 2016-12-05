@@ -95,6 +95,8 @@ var main = function() {
         }
         else
         {
+          $('#scoreMain').empty();
+          $('#scoreMain').append(data.userScore);
           $('#lives').empty();
           for(var i = 0 ; i < userLife ; i++)
           {
