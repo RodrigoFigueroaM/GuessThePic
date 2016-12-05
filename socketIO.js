@@ -79,10 +79,12 @@ timerId = setInterval(function() {
             s = (s < 10)? '0'+s : s;
             console.log(h + ":" + m + ":" + s);
 
+        var socketList = io.sockets.clients();
         //reset all user answerCorrect = false
-        for each (var socket in io.sockets) {
-            socket.answerCorrect = false;
-        }        
+        for(var i=0; i<socketList.length;i++){
+            socketList[i].answerCorrect = false;
+            console.log(socketList[i].answerCorrect);
+        } 
 
         //send request to server for question
         request(
@@ -99,7 +101,7 @@ timerId = setInterval(function() {
                     //reset start timer
                     startTimeMS = (new Date).getTime();
 
-                    console.log(body);
+                    //console.log(body);
                     var jsonData = JSON.parse(body);
                     //json obj to send back to clients
                     console.log("send all client with question:");
@@ -108,7 +110,7 @@ timerId = setInterval(function() {
                                     "question": jsonData.questionOut,
                                     "timer": gameTimer,
                                     "answerEn": jsonData.answer.addChar().shuffle()};
-                    console.log(jsonRes);
+                    //console.log(jsonRes);
                     //save the answer
                     questionAnswer = jsonData.answer;
 
@@ -177,6 +179,7 @@ io.sockets.on('connection', function(socket){
     ********************************************************/
     socket.on('end round', function() {
         console.log("send end round");
+        console.log("cor:", socket.answerCorrect);
         //check if client answer right question before end round
         if(socket.answerCorrect === false) {
             //loop each users
@@ -227,8 +230,10 @@ io.sockets.on('connection', function(socket){
             });
         } else {
             //send update of online users 
-            io.sockets.emit('get users', users);
+            io.sockets.emit('get users', JSON.stringify(users));
         }
+
+        socket.answerCorrect = false;
     });
 
     /********************************************************
@@ -344,7 +349,7 @@ io.sockets.on('connection', function(socket){
         });
 
         //update list of users on client side
-        io.sockets.emit('get users', users);
+        io.sockets.emit('get users', JSON.stringify(users));
 
         //disconnect socket
         connections.splice(connections.indexOf(socket), 1);
