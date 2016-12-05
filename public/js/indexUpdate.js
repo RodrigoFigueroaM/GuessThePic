@@ -15,7 +15,7 @@ function GetScore()
           contentType: 'application/json',
           url: 'http://localhost:3000/score',
           success: function(data){
-              topScoreModel.players(data.scoreSort);
+              MasterController.scoreModel.player(data.scoreSort);
 
           }
   });
@@ -34,7 +34,7 @@ function TopPlayer(UserName,UserScore)
     self.UserScore = UserScore;
 }
 
-function user(username)
+function User(username)
 {
     var self = this;
     self.username = username;
@@ -48,13 +48,16 @@ function user(username)
 // Overall viewmodel for this screen, along with initial state
 var topScoreModel =
 {
-    players : ko.observableArray(),
-    newUserText :  ko.observable(),
-    onlineUsers: ko.observableArray([]),
+    player : ko.observableArray(),
     addplayer: function()
         {
-            players.push(new TopPlayer(UserName,UserScore));
-        },
+            player.push(new TopPlayer(UserName,UserScore));
+        }
+};
+
+var loginModel =
+{
+    newUserText :  ko.observable(),
     /*loging controller */
     loginFunction : function()
     {
@@ -67,13 +70,44 @@ var topScoreModel =
         /*user controller */
         createNewUser: function()
         {
-            var player = new user( this.newUserText());
+            var player = new User( this.newUserText());
             return player;
         }
 };
 
-ko.applyBindings(topScoreModel) ;
+var onlineUsersModel =
+{
+    onlineUsers: ko.observableArray([]),
+};
 
+var gameStatusModel =
+{
+    checkFunction: function()
+    {
+            answerString='';
+            $('.answerChar .EachChar').each(function(value,element)
+            {
+                answerString+=$(element).html();
+            });
+           //send to socket
+           socketSend("answer", JSON.stringify({"answer": answerString}));
+           console.log(answerString);
+    }
 
+};
+
+/******************************
+*        Main controller in charge of models
+*******************************/
+
+var MasterController =
+{
+    scoreModel: topScoreModel,
+    loging: loginModel,
+    userOnlineController :onlineUsersModel,
+    gameStatusController:gameStatusModel
+};
+
+ko.applyBindings(MasterController);
 
 $(document).ready(main);

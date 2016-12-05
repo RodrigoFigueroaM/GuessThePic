@@ -37,7 +37,7 @@ var main = function() {
     * data - [{userId: <id>, username: <name>, life: 3}, <more users name>]
     *********************************************************/
     socket.on('get users', function(data) {
-        topScoreModel.onlineUsers(JSON.parse(data));
+            MasterController.userOnlineController.onlineUsers(JSON.parse(data));
     });
 
     /*********************************************************
@@ -111,8 +111,10 @@ var main = function() {
     *********************************************************/
     socket.on('check delay', function(data)
     {
-        console.log(data);
+        var waitTime=JSON.parse(data);
+        $('#warningMess').append(Math.floor((waitTime.waitTime / 1000))+' seconds');
     });
+
 
     /*********************************************************
     * check user answer is right or wrong

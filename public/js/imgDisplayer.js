@@ -57,14 +57,7 @@ function drawImage(image,numberOfRows,numberOfColumns,array)
     };
 }
 
-/*********************************************************
-*  stops the timer on the window
-* interval -  current interval on the window
-*********************************************************/
-function clearTimer(interval)
-{
-        clearInterval(interval);
-}
+
 
 /*********************************************************
 *  sets the configuration for the animation on displaying
@@ -75,7 +68,7 @@ function clearTimer(interval)
 *********************************************************/
 var Setup = function(img)
 {
-    var counter=19; /*seconds*/
+    var counter=27; /*seconds*/
     var refreshRate=100; /*tiles per seconds*/
     var images= img;
     var imageIndex=0;
@@ -139,9 +132,3 @@ var twoDimAraray = function (row,col)
     }
 return twoDArray;
 };
-
-
-
-
-//ajax when answer the question
-//end AnswerQuestion
