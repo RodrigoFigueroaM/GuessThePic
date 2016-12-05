@@ -11,6 +11,7 @@ $('.ui.progress').progress({
 });
 //testing only
 var userLife = 3;
+var myRestart;
 
 /*********************************************************
 * send request to socket server
@@ -87,15 +88,15 @@ var main = function() {
         if(userLife === 0)
         {
           //execute end game
-          $('#questionSpace').empty();
-          $('#questionSpace').append(
+          $('#setMain').empty();
+          $('#setMain').append(
               '<div> GAME OVER </div>' +
-              '<a href="locahost:3000">newgame</a>'
+              '<button class="ui button" onclick="myRestart()">Play Again</button>'
           );
         }
         else
         {
-          
+
           $('#lives').empty();
           for(var i = 0 ; i < userLife ; i++)
           {
@@ -117,7 +118,7 @@ var main = function() {
     * check user answer is right or wrong
     * data - {result: <true or false>}
     *********************************************************/
-    socket.on('check answer', function(data) {        
+    socket.on('check answer', function(data) {
         data = JSON.parse(data);
         if(data.result === 'true')
         {
@@ -145,3 +146,8 @@ var main = function() {
 };
 
 $(document).ready(main);
+
+
+function myRestart(){
+  location.reload();
+}
