@@ -5,6 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 //var redis = require('redis');
+var io = require('./socketIO.js');
 var request = require('request');
 
 
