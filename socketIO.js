@@ -85,7 +85,6 @@ timerId = setInterval(function() {
             socketList[i].answerCorrect = false;
             console.log(socketList[i].answerCorrect);
         } 
-
         //send request to server for question
         request(
             //send GET request to server to retreive question picture and answer
@@ -116,8 +115,6 @@ timerId = setInterval(function() {
 
                     //send the question to all clients
                     io.sockets.emit('get question', JSON.stringify(jsonRes));
-
-                    
                 }
             }
         );
@@ -200,6 +197,9 @@ io.sockets.on('connection', function(socket){
 
                         //send back client with how many life left
                         socket.emit('check userLife', JSON.stringify(jsonRes));
+
+                        //send update of online users
+                        io.sockets.emit('get users', users);
                     }
                     //send the total score of client after loss 3 lives
                     else {
@@ -228,6 +228,7 @@ io.sockets.on('connection', function(socket){
                     return true;
                 }
             });
+            
         } else {
             //send update of online users 
             io.sockets.emit('get users', JSON.stringify(users));
@@ -285,13 +286,11 @@ io.sockets.on('connection', function(socket){
                 //get index of user in users list
                 if(value.userId === socket.userId) {
                     //add set the score base on answer time
-                    users[index].score += parseInt(timeRemain / 1000);
-
+                    users[index].score += timeRemain;
                     //break out of some loop (for loop)
                     return true;
                 }
             });
-
             socket.answerCorrect = true;
             result = 'true';
         }
