@@ -200,13 +200,14 @@ io.sockets.on('connection', function(socket){
                     }
                     //send the total score of client after loss 3 lives
                     else {
-                        var data = {username: users[index].username, score: users[index].score};
+                        var data = {userName: users[index].username, score: users[index].score};
+                        data = JSON.stringify(data);
 
                         //send username and score to server
                         request(
                             //send POST request to server
                             requestOption({
-                                path: '/question',
+                                path: '/scoreUpdate',
                                 method: 'POST',
                                 data: data
                             }),
