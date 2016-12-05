@@ -26,12 +26,12 @@
     <!--Logo-->
     <img id="pic" src="img/PredictThePicLogo.png" >
     <!--Login-->
-    <div class="ui text container">
+    <div data-bind="with: loging" class="ui text container">
       <form class="ui form">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-                <input type="text" id="usernameInput" data-bind="textInput: newUserText" placeholder="Enter Username">
+        <input type="text" id="usernameInput" data-bind="textInput: newUserText">
           </div>
         </div>
            <div class="ui fluid large submit button" id="playBtn" data-bind="click: loginFunction">Play the Game!</div>
@@ -47,7 +47,7 @@
             <th class="right aligned">Rounds Survived</th>
           </tr>
         </thead>
-        <tbody data-bind="foreach: players">
+        <tbody   data-bind="foreach: scoreModel.player">
           <tr>
             <td data-bind="text:UserName">
               User1
@@ -64,20 +64,20 @@
   <div class="game">
     <div class="ui container">
       <div class="ui grid">
-        <!--List of users online-->
-        <div class="three wide column">
-          <div class="ui segment">
-            <div class="ui medium header">Players Online</div>
-            <div class="ui list" data-bind="foreach: onlineUsers">
-              <div class="item">
-                <span data-bind="text: $data.username"></span> - <span data-bind="text: $data.score"></span>
+          <!--List of users online-->
+          <div class="three wide column">
+            <div class="ui segment">
+              <div class="ui medium header">Players Online</div>
+              <div class="ui list" data-bind="foreach: userOnlineController.onlineUsers">
+                <div class="item">
+                  <span data-bind="text: $data.username"></span> - <span data-bind="text: $data.score"></span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         <!--Main Game: Picture and input-->
         <div class="nine wide column">
-          <div class="ui container">
+          <div class="ui container" id="setMain">
             <div class="ui medium header" id="questionSpace">Can you guess what this is?</div>
             <canvas id="canvas">
             </canvas>
@@ -90,7 +90,7 @@
           </div>
         </div>
         <!--Game info: lives, time left, score, check, skip-->
-        <div class="four wide column">
+        <div  data-bind="with: gameStatusController"  class="four wide column">
           <div class="ui segment">
             <div class="ui container">
               <div class="ui medium header">Lives left</div>
@@ -102,7 +102,7 @@
                 </div>
               <div class="ui medium header">Player Score</div>
               <p><span id="scoreMain">0</span></p>
-              <button class="ui button" id="checkAnswer">Check</button>
+               <button class="ui button" id="checkAnswer" data-bind="click: checkFunction">Check</button>
               <!-- <button class="ui button" id="next">Skip</button> -->
             </div>
           </div>
