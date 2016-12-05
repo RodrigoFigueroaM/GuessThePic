@@ -10,14 +10,14 @@ function GetScore()
 {
   'use strict';
   $.ajax({
-          type: 'GET',
-          dataType: 'json',
-          contentType: 'application/json',
-          url: 'http://localhost:3000/score',
-          success: function(data){
-              MasterController.scoreModel.player(data.scoreSort);
+    type: 'GET',
+    dataType: 'json',
+    contentType: 'application/json',
+    url: 'http://localhost:3000/score',
+    success: function(data){
+        MasterController.scoreModel.player(data.scoreSort);
 
-          }
+    }
   });
 }
 
@@ -109,5 +109,16 @@ var MasterController =
 };
 
 ko.applyBindings(MasterController);
+
+$('.ui.form').submit(function(event) {
+  event.preventDefault();
+});
+
+$('#usernameInput').on('keypress', function(event) {
+  if (event.keyCode === 13) {
+    console.log("enter pressed");
+    MasterController.loging.loginFunction();
+  }
+});
 
 $(document).ready(main);
