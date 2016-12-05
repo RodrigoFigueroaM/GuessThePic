@@ -194,8 +194,7 @@ io.sockets.on('connection', function(socket){
 
                         if (users[index].life === 0) {
                             var data = {userName: users[index].username, score: users[index].score};
-                            data = JSON.stringify(data);
-
+                            
                             //send username and score to server
                             request(
                                 //send POST request to server
@@ -221,7 +220,7 @@ io.sockets.on('connection', function(socket){
                         //send back client with how many life left
                         socket.emit('check userLife', JSON.stringify(jsonRes));
                     }
-                    
+
                     //break out of some loop (for loop)
                     return true;
                 }
