@@ -95,8 +95,7 @@ var main = function() {
         }
         else
         {
-          $('#scoreMain').empty();
-          $('#scoreMain').append(data.userScore);
+          
           $('#lives').empty();
           for(var i = 0 ; i < userLife ; i++)
           {
@@ -118,16 +117,17 @@ var main = function() {
     * check user answer is right or wrong
     * data - {result: <true or false>}
     *********************************************************/
-    socket.on('check answer', function(data) {
-        console.log(data);
-        var test = JSON.parse(data);
-        console.log(test);
-        if(test.result === 'true')
+    socket.on('check answer', function(data) {        
+        data = JSON.parse(data);
+        if(data.result === 'true')
         {
           $('#checkAnswer').prop("disabled", true);
           $('.EachChar').prop("disabled", true);
           $('#warningMess').empty();
           $('#warningMess').append('wrong');
+
+          $('#scoreMain').empty();
+          $('#scoreMain').append(data.score);
         }
     });
 
