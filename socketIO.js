@@ -192,36 +192,36 @@ io.sockets.on('connection', function(socket){
                         console.log(users[index].life);
                         users[index].life -= 1;
 
+                        if (users[index].life === 0) {
+                            var data = {userName: users[index].username, score: users[index].score};
+                            data = JSON.stringify(data);
+
+                            //send username and score to server
+                            request(
+                                //send POST request to server
+                                requestOption({
+                                    path: '/scoreUpdate',
+                                    method: 'POST',
+                                    data: data
+                                }),
+                                //call back of the POST request
+                                function(err, res, body) {
+                                    if(err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log(body);
+                                    }
+                                }
+                            );
+                        }
+
                         console.log(users[index].life);
                         var jsonRes = {userLife: users[index].life, userScore: users[index].score};
 
                         //send back client with how many life left
                         socket.emit('check userLife', JSON.stringify(jsonRes));
                     }
-                    //send the total score of client after loss 3 lives
-                    else {
-                        var data = {userName: users[index].username, score: users[index].score};
-                        data = JSON.stringify(data);
-
-                        //send username and score to server
-                        request(
-                            //send POST request to server
-                            requestOption({
-                                path: '/scoreUpdate',
-                                method: 'POST',
-                                data: data
-                            }),
-                            //call back of the POST request
-                            function(err, res, body) {
-                                if(err) {
-                                    console.log(err);
-                                } else {
-                                    console.log(body);
-                                }
-                            }
-                        );
-                    }
-
+                    
                     //break out of some loop (for loop)
                     return true;
                 }
