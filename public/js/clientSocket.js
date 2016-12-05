@@ -89,7 +89,8 @@ var main = function() {
           //execute end game
           $('#questionSpace').empty();
           $('#questionSpace').append(
-              '<div> GAME OVER </div>'
+              '<div> GAME OVER </div>' +
+              '<a href="locahost:3000">newgame</a>'
           );
         }
         else
