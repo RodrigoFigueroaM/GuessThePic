@@ -31,17 +31,7 @@ var buttonMan = function(answerGlobal)
 
 };
 
-     /* when checkAnswer button is clicked get in html of inside of element in checkAnswer*/
-    $('#checkAnswer').on("click", function()
-    {
-        answerString=''; //clear answer everytime before use
-        $('.checkAnswer .EachChar').each(function(value,element)
-        {
-            answerString+=$(element).html();
-        });
-       //send to socket
-       socketSend("answer", JSON.stringify({"answer": answerString}));
-    });
+    
 /********************************************************************
 * decomposes a word into chars to create html buttons and
 *    append to a html field

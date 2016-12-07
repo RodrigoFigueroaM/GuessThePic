@@ -79,6 +79,7 @@ var onlineUsersModel =
 //  viewmodel for status of the game
 var gameStatusModel =
 {
+    /* when checkAnswer button is clicked get in html of inside of element in checkAnswer*/
     checkFunction: function()
     {
             answerString='';
