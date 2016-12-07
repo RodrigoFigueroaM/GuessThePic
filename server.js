@@ -200,7 +200,6 @@ app.get('/question', function(req,res){
 			        }
 			        else {
 			          console.log('return');
-					  console.log('ASDIUAHDUASHUDHA');
 					  console.log(dataIn);
 			          res.json({'questionOut' : dataIn[0].Question,
 													'pic': dataIn[0].Picture,

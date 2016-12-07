@@ -84,7 +84,7 @@ timerId = setInterval(function() {
         for(var i=0; i<socketList.length;i++){
             socketList[i].answerCorrect = false;
             console.log(socketList[i].answerCorrect);
-        } 
+        }
         //send request to server for question
         request(
             //send GET request to server to retreive question picture and answer
@@ -194,7 +194,7 @@ io.sockets.on('connection', function(socket){
 
                         if (users[index].life === 0) {
                             var data = {userName: users[index].username, score: users[index].score};
-                            
+
                             //send username and score to server
                             request(
                                 //send POST request to server
@@ -227,7 +227,7 @@ io.sockets.on('connection', function(socket){
             });
 
         } else {
-            //send update of online users 
+            //send update of online users
             io.sockets.emit('get users', JSON.stringify(users));
         }
 

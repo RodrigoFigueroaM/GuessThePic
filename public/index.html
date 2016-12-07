@@ -27,14 +27,14 @@
     <img id="pic" src="img/PredictThePicLogo.png" >
     <!--Login-->
     <div data-bind="with: loging" class="ui text container">
-      <form class="ui form">
+      <form  data-bind="submit: loginFunction" class="ui form">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
         <input type="text" id="usernameInput" data-bind="textInput: newUserText">
           </div>
         </div>
-           <div class="ui fluid large submit button" id="playBtn" data-bind="click: loginFunction">Play the Game!</div>
+           <div class="ui fluid large submit button" id="playBtn" type ="submit" data-bind="click: loginFunction">Play the Game!</div>
       </form>
     </div>
     <!--High Scores-->

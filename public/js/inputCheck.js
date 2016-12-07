@@ -1,9 +1,14 @@
+/********************************************************************
+* Handles button listener
+* para             -
+*                   answerGlobal: string or char
+* return           -
+*                   none
+********************************************************************/
 var buttonMan = function(answerGlobal)
 {
-    //var answer = shuffleWord(test1);
-     $('#testChar').empty();
-     $('.inChar').empty();
-     console.log(answerGlobal);
+     $('#testChar').empty(); //empty field for buttons
+     $('.inChar').empty();  // empty field for buttons
      var arrayButtons = createWordButton(answerGlobal, '.inChar');
      var answerArray=[];
      var answerString='';
@@ -12,8 +17,8 @@ var buttonMan = function(answerGlobal)
      {
          $('#button'+ element).on('click', function()
          {
-              arrayButtons[element].clicked();
-            if( arrayButtons[element].numOfClicks % 2 !==0 )
+            arrayButtons[element].clicked();
+            if( arrayButtons[element].numOfClicks % 2 !== 0)
             {
                 $('.answerChar').append(this);
             }
@@ -24,23 +29,28 @@ var buttonMan = function(answerGlobal)
          });
      });
 
-
-
 };
 
-$('#checkAnswer').on("click", function()
-{
-    answerString='';
-    $('.answerChar .EachChar').each(function(value,element)
+     /* when checkAnswer button is clicked get in html of inside of element in checkAnswer*/
+    $('#checkAnswer').on("click", function()
     {
-        answerString+=$(element).html();
+        answerString=''; //clear answer everytime before use
+        $('.checkAnswer .EachChar').each(function(value,element)
+        {
+            answerString+=$(element).html();
+        });
+       //send to socket
+       socketSend("answer", JSON.stringify({"answer": answerString}));
     });
-   //send to socket
-   socketSend("answer", JSON.stringify({"answer": answerString}));
-    //$('#checkAnswer').prop("disabled", true);
-   console.log(answerString);
-})
-
+/********************************************************************
+* decomposes a word into chars to create html buttons and
+*    append to a html field
+* para             -
+*                   wordIn a "string"
+*                   element html element
+* return           -
+*                   array with sinamically generated buttons
+********************************************************************/
 function createWordButton(wordIn,element)
 {
     var wordButton=[];
@@ -49,7 +59,7 @@ function createWordButton(wordIn,element)
     $('#checkAnswer').prop("disabled", false);
     for(i = 0; i < wordIn.length; i++)
     {
-        wordButton[i]= new BuildBut(wordIn[i],0,i);
+        wordButton[i]= new BuildBut(wordIn[i],i);
     }
     for(i = 0; i < wordButton.length; i++)
     {
@@ -58,11 +68,22 @@ function createWordButton(wordIn,element)
     return wordButton;
 }
 
-var BuildBut = function (letterIn, numOfClicks,id)
+/********************************************************************
+* creates a dynamically object html object
+* para             -
+*                   letterIn a char that will be displayed
+*                   id to reference the id of the element
+* return           -
+*                   html object with of button type
+*                   <button class="EachChar ui violet button"
+*                            id="button'+id+'">
+*                    </button>
+********************************************************************/
+var BuildBut = function (letterIn,id)
 {
     var self = this;
     self.letterIn = letterIn;
-    self. numOfClicks =numOfClicks;
+    self. numOfClicks =0;
     self.id= id;
     self.build = function()
     {

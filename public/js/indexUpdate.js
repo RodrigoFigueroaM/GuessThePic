@@ -20,12 +20,12 @@ function GetScore()
     }
   });
 }
-
-
+/*+++++++++++++++++++++++++++++++++++++++++
++ Knockout handlers
++++++++++++++++++++++++++++++++++++++++++*/
 /******************************
 *        Classes
 *******************************/
-
 // Class to represent a row in the seat reservations grid
 function TopPlayer(UserName,UserScore)
  {
@@ -33,19 +33,16 @@ function TopPlayer(UserName,UserScore)
     self.UserName = UserName;
     self.UserScore = UserScore;
 }
-
 function User(username)
 {
     var self = this;
     self.username = username;
     self.lives = 3;
 }
-
-
 /******************************
 *        Models
 *******************************/
-// Overall viewmodel for this screen, along with initial state
+//  viewmodel for this the top ten score
 var topScoreModel =
 {
     player : ko.observableArray(),
@@ -54,7 +51,7 @@ var topScoreModel =
             player.push(new TopPlayer(UserName,UserScore));
         }
 };
-
+// viewmodel  for loging in into the game
 var loginModel =
 {
     newUserText :  ko.observable(),
@@ -74,12 +71,12 @@ var loginModel =
             return player;
         }
 };
-
+//  viewmodel for user online
 var onlineUsersModel =
 {
     onlineUsers: ko.observableArray([]),
 };
-
+//  viewmodel for status of the game
 var gameStatusModel =
 {
     checkFunction: function()
@@ -93,13 +90,11 @@ var gameStatusModel =
            socketSend("answer", JSON.stringify({"answer": answerString}));
            console.log(answerString);
     }
-
 };
 
-/******************************
+/***************************************************
 *        Main controller in charge of models
-*******************************/
-
+****************************************************/
 var MasterController =
 {
     scoreModel: topScoreModel,
@@ -110,15 +105,5 @@ var MasterController =
 
 ko.applyBindings(MasterController);
 
-$('.ui.form').submit(function(event) {
-  event.preventDefault();
-});
-
-$('#usernameInput').on('keypress', function(event) {
-  if (event.keyCode === 13) {
-    console.log("enter pressed");
-    MasterController.loging.loginFunction();
-  }
-});
 
 $(document).ready(main);
