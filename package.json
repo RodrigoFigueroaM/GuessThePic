@@ -2,7 +2,7 @@
   "name": "guessthepic",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "foreman start",
   "dependencies": {
     "accepts": "^1.3.3",
     "acorn": "^2.7.0",
