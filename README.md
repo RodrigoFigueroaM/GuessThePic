@@ -1,5 +1,7 @@
 # GuessThePic
-available at http://www.predictpic.us
+A multiplayer web based game.
+You Have 30 seconds to guess the picture.
+
 ##Frameworks, Modules, Libraries, etc:
 - Semantic UI
 - Node.js
@@ -31,6 +33,7 @@ the socket.io running on localhost:8080
 
 
 # Game
+![](https://github.com/RodrigoFigueroaM/GuessThePic/blob/master/screenshots/Kapture.gif)
 ## login screen
 ![alt tag](./screenshots/Login.png) 
 ## Answered right 
